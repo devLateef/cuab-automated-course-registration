@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  justify-content: center;
+}
+.container > div {
+  width: 75%;
+}
+
+.box {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+.logo img {
+  width: 130px;
+}
+p {
+  font-weight: 500;
+  font-size: 14px;
+}
+.add-web-wrapper span {
+  margin: 0 1rem;
+}
+.cuab {
+  text-align: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed;
+  margin-bottom: 1rem;
+}
+th,
+td {
+  border: 1px solid black;
+  padding: 2px 5px;
+}
+.serial-no {
+  width: 60px;
+}
+.course-code {
+  width: 100px;
+}
+.autoo {
+  width: 100px;
+}
+.student-info {
+  margin-bottom: 2.5rem;
+}
+.student-course {
+  margin-bottom: 9rem;
+}
+.student-course p {
+  margin-left: 10.5rem;
+}
+.student-signature {
+  margin: 0 auto;
+  width: 500px;
+}
+.flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.flex > div {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.custom-table {
+  width: 300px;
+  font-size: 12px;
+}
+@media print {
+  .container > div {
+    width: 100%;
+  }
+}
