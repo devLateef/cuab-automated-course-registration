@@ -6,6 +6,8 @@ dotenv.config();
 
 const app = express();
 
+const port = process.env.PORT
+
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
@@ -18,6 +20,6 @@ app.get('/coursereg', (req, res)=>{
 })
 
 
-app.listen(3000, ()=>{
-    console.log('App listening on port 3000');
+app.listen(port, ()=>{
+    console.log(`App listening on port ${port}`);
 })
