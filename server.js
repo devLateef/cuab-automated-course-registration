@@ -4,8 +4,6 @@ const ejs = require('ejs');
 
 dotenv.config();
 
-const path = require('path');
-
 const app = express();
 
 app.use(express.static('public'));
