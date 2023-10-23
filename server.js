@@ -10,11 +10,11 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res)=>{
-    res.render('courseForm');
+    res.render('dashboard');
 });
 
-app.get('/dashboard', (req, res)=>{
-    res.render('dashboard');
+app.get('/coursereg', (req, res)=>{
+    res.render('courseForm');
 })
 
 
