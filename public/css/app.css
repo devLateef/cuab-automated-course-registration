@@ -1,3 +1,7 @@
+body{
+    margin: 0;
+    padding: 0;
+}
 header{
     display: flex;
     width: auto;
@@ -64,13 +68,66 @@ footer{
     margin-top: -20px;
 }
 
-.nav-bar{
+.side-bar{
     list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    background-color: #3A3633;
+    height: 100%; /* Full height */
+    position: fixed; /* Make it stick, even on scroll */
+    overflow: auto; /* Enable scrolling if the sidenav has too much content */
 }
-.nav-bar a {
+.side-bar a {
     text-decoration: none;
-    color: black;
+    color: white;
+    padding-top: 20px;
+    display: block;
 }
 .logo{
     display: flex;
+}
+.logo p{
+    margin-top: -5px;
+    margin-left: 5px;
+}
+.main{
+    margin-left: 20%;
+    background-color: rgb(124, 155, 118);
+    min-height: 100vh;
+}
+.header{
+    display: flex;
+    color: black;
+    padding: 5px 20px;
+    align-items: center;
+    background-color: #EDEDED;
+    justify-content: space-between;
+}
+.side-bar li {
+    margin: 10px 0 0 30px;
+    line-height: 1px;
+    font-size: large;   
+}
+i{
+    margin-right: 10px;
+}
+.menu-line{
+    cursor: pointer;
+}
+.boxes{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.box-1, .box-2, .box-3{
+    display: flex;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    margin-top: 20px;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #54f7bb;
 }
