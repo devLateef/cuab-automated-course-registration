@@ -1,7 +1,7 @@
 header{
     display: flex;
     width: auto;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 img{
     width: 100px;
@@ -62,4 +62,15 @@ footer{
     display: flex;
     justify-content: space-between;
     margin-top: -20px;
+}
+
+.nav-bar{
+    list-style-type: none;
+}
+.nav-bar a {
+    text-decoration: none;
+    color: black;
+}
+.logo{
+    display: flex;
 }
