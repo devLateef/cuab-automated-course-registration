@@ -1,137 +1,141 @@
-body{
-    margin: 0;
-    padding: 0;
+body {
+  margin: 0;
+  padding: 0;
 }
-header{
-    display: flex;
-    width: auto;
-    justify-content: space-between;
+header {
+  display: flex;
+  width: auto;
+  justify-content: space-between;
 }
-img{
-    width: 100px;
-    height: 100px;
+img {
+  width: 100px;
+  height: 100px;
 }
-.box{
-    width: 100px;
-    height: 100px;
-    border: 2px solid black;
+.box {
+  width: 100px;
+  height: 100px;
+  border: 2px solid black;
 }
-.header-text, .body-heading{
-    line-height: 0.5px;
-    text-align: center;
+.header-text,
+.body-heading {
+  line-height: 0.5px;
+  text-align: center;
 }
-.body-heading{
-    padding: 20px 0px 0px;
+.body-heading {
+  padding: 20px 0px 0px;
 }
-.body-heading p{
-    font-size: small;
+.body-heading p {
+  font-size: small;
 }
-.table-1, .table-2{
-    text-align: left;
-}
-table{
+/* .table-1,
+.table-2 {
+  text-align: left;
+} */
+/* table{
     width: 100%;
     font-size: small;
 }
 table, th, td{
     border: 2px solid black;
     border-collapse: collapse;
+} */
+h5 {
+  text-align: center;
+  font-size: small;
+  margin-bottom: 5px;
 }
-h5{
-    text-align: center;
-    font-size: small;
-    margin-bottom: 5px;
+.unit {
+  margin-left: 120px;
 }
-.unit{
-    margin-left: 120px;
+.signature {
+  margin: 100px 0px 40px 100px;
 }
-.signature{
-    margin: 100px 0px 40px 100px;
+.office-use {
+  margin-left: 120px;
 }
-.office-use{
-    margin-left: 120px;
-}
-.dynamic{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 720px;
-}
-
-footer{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: -20px;
+.dynamic {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 720px;
 }
 
-.side-bar{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 20%;
-    background-color: #3A3633;
-    height: 100%; /* Full height */
-    position: fixed; /* Make it stick, even on scroll */
-    overflow: auto; /* Enable scrolling if the sidenav has too much content */
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: -20px;
+}
+
+.side-bar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 20%;
+  background-color: #3a3633;
+  height: 100%; /* Full height */
+  position: fixed; /* Make it stick, even on scroll */
+  overflow: auto; /* Enable scrolling if the sidenav has too much content */
 }
 .side-bar a {
-    text-decoration: none;
-    color: white;
-    padding-top: 20px;
-    display: block;
+  text-decoration: none;
+  color: white;
+  padding-top: 20px;
+  display: block;
 }
-.side-bar a:hover{
-    color: rgb(151, 202, 141);
+.side-bar a:hover {
+  color: rgb(151, 202, 141);
 }
-.logo{
-    display: flex;
+.logo {
+  display: flex;
 }
-.logo p{
-    margin-top: -5px;
-    margin-left: 5px;
+.logo p {
+  margin-top: -5px;
+  margin-left: 5px;
 }
-.main{
-    margin-left: 20%;
-    background-color: rgb(124, 155, 118);
-    min-height: 100vh;
+.main {
+  margin-left: 20%;
+  background-color: rgb(255, 255, 255);
+  min-height: 100vh;
 }
-.header{
-    display: flex;
-    color: black;
-    padding: 5px 20px;
-    align-items: center;
-    background-color: #EDEDED;
-    justify-content: space-between;
+.header {
+  display: flex;
+  color: black;
+  padding: 5px 20px;
+  align-items: center;
+  background-color: #ededed;
+  justify-content: space-between;
 }
 .side-bar li {
-    margin: 10px 0 0 30px;
-    line-height: 1px;
-    font-size: large;   
+  margin: 10px 0 0 30px;
+  line-height: 1px;
+  font-size: large;
 }
-i{
-    margin-right: 10px;
+i {
+  margin-right: 10px;
 }
-.menu-icon{
-    cursor: pointer;
+.menu-icon {
+  cursor: pointer;
 }
-.boxes{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.boxes {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
-.boxes p{
-    font-size: 40px;
+.boxes p {
+  font-size: 40px;
 }
-.box-1, .box-2, .box-3{
-    display: flex;
-    width: 200px;
-    height: 200px;
-    font-size: 20px;
-    text-align: center;
-    margin-top: 20px;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 10px;
-    background-color: #54f7bb;
-};
+.box-1,
+.box-2,
+.box-3 {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #54f7bb;
+}
