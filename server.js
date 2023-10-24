@@ -17,7 +17,11 @@ app.get('/', (req, res)=>{
 
 app.get('/coursereg', (req, res)=>{
     res.render('courseForm');
-})
+});
+
+app.get('/coursemanager', (req, res)=>{
+    res.render('coursemanager');
+});
 
 
 app.listen(port, ()=>{
