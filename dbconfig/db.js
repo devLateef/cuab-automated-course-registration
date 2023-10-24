@@ -7,11 +7,5 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 });
 
-// const sql = 'SELECT * FROM cuab.registrations';
-
-// pool.query(sql, function(err, result){
-//     if(err) return console.log({error: err.message});
-//     console.log(result);
-// })
 
 module.exports = pool.promise();
