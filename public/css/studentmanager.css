@@ -1,0 +1,33 @@
+.table-info {
+  width: 90%;
+  margin: 2rem auto 0 auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed;
+  margin-top: 4rem;
+}
+th,
+td {
+  border: 1px solid black;
+  padding: 2px 5px;
+}
+.serial-no {
+  width: 40px;
+}
+.matric-no {
+  width: 100px;
+}
+.matric-no + th {
+  width: 400px;
+}
+.matric-no + th + th {
+  width: 300px;
+}
+
+#search_btn a {
+  text-decoration: none;
+  color: black;
+}

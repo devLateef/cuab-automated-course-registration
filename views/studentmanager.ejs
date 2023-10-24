@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/studentmanager.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css"
+    />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <nav>
+      <ul class="side-bar">
+        <li>
+          <a href="#"> <i class="fa fa-dashboard"></i>Dashboard</a>
+        </li>
+        <li>
+          <a href="#"> <i class="fa fa-user"></i>Student Manager</a>
+        </li>
+        <li>
+          <a href="#"><i class="fa fa-file"></i>Course Manager</a>
+        </li>
+        <li>
+          <a href="#"><i class="fa fa-cube"></i>Course Registration</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="main">
+      <div class="header">
+        <div class="logo">
+          <img
+            src="img/CrescentLogo.jpeg"
+            alt="Crescent Logo"
+            style="width: 30px; height: 30px"
+          />
+          <p>
+            Crescent University <br />
+            Abeokuta (CUAB)
+          </p>
+        </div>
+        <div>
+          <H3>Welcome Back Admin</H3>
+        </div>
+        <div class="menu-line">
+          <i class="fa fa-navicon"></i>
+        </div>
+      </div>
+      <div class="table-info">
+        <div class="search-bar">
+          <input type="text" id="search-input" />
+          <button id="search_btn">Search</button>
+          <button id="search_btn">
+            <a href="/student-manager">Fetch all</a>
+          </button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th class="serial-no">S/NO</th>
+                <th class="matric-no">Matric No</th>
+                <th>Full Name</th>
+                <th>Programme</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody id="show_data">
+              <% if (results.length !== 0) { %>
+              <div>
+                <% for (let i = 0; i < results.length; i++) { %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td><%= results[i].MatriculationNo %></td>
+                  <td>
+                    <%= results[i].Surname + ' ' + results[i].Middlename + ' ' +
+                    results[i].Firstname %>
+                  </td>
+                  <td><%= results[i].Programme %></td>
+                  <td><%= results[i].Level %></td>
+                </tr>
+                <% } %>
+              </div>
+              <% } else { %>
+              <h2>No data</h2>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
