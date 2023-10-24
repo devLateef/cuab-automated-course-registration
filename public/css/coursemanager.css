@@ -1,0 +1,16 @@
+.container{
+    border-radius: 2rem;
+    padding: 1rem;
+}
+.search-content input{
+    width: 23%;
+    height: 40px;
+    padding: 1rem;
+}
+.btn-group{
+    margin-top: 1rem;
+}
+.btn-group .btn{
+    padding: .5rem;
+    cursor: pointer;
+}
