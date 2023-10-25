@@ -26,7 +26,9 @@
           <a href="/coursemanager"><i class="fa fa-file"></i>Course Manager</a>
         </li>
         <li>
-          <a href="#"><i class="fa fa-cube"></i>Course Registration</a>
+          <a href="/course-registration"
+            ><i class="fa fa-cube"></i>Course Registration</a
+          >
         </li>
       </ul>
     </nav>
@@ -56,14 +58,52 @@
           <!-- <i class="fa fa-search"></i> -->
         </div>
         <div class="btn-group">
-          <button type="submit" class="btn">
+          <button type="submit" class="code-btn" id="code-btn">
             <i class="fa fa-search"></i>Search
           </button>
-          <button type="submit" class="btn">
-            <i class="fa fa-folder-open"></i>Fetch All Courses
+          <button type="submit" class="fetch-btn">
+            <i class="fa fa-folder-open"></i
+            ><a href="/coursemanager">Fetch All Courses</a>
           </button>
         </div>
       </div>
+      <div class="table-container">
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th class="serial-no">S/NO</th>
+                <th class="matric-no">Course Code</th>
+                <th>Course Title</th>
+                <th>Course Unit</th>
+                <th>Course Status</th>
+                <th>Department</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody id="display_data">
+              <% if (results.length !== 0) { %>
+              <div>
+                <% for (let i = 0; i < results.length; i++) { %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td><%= results[i].CourseCode %></td>
+                  <td><%= results[i].CourseTitle %></td>
+                  <td><%= results[i].CourseUnit %></td>
+                  <td><%= results[i].CourseStatus %></td>
+                  <td><%= results[i].Department %></td>
+                  <td><%= results[i].Level %></td>
+                </tr>
+                <% } %>
+              </div>
+              <% } else { %>
+              <h2>No data</h2>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+    <script src="js/coursescript.js"></script>
   </body>
 </html>

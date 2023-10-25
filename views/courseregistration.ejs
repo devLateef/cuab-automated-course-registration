@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="css/studentmanager.css" />
+    <link rel="stylesheet" href="css/courseregistration.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css"
@@ -54,48 +55,21 @@
       </div>
       <div class="table-info">
         <div class="search-bar">
-          <input type="text" id="search-input" />
-          <button id="search_btn">Search</button>
-          <button id="search_btn">
+          <h3>Matric No</h3>
+          <input type="text" id="search_input" />
+          <button id="search_btn">Fetch</button>
+          <!-- <button id="search_btn">
             <a href="/student-manager">Fetch all</a>
-          </button>
+          </button> -->
         </div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th class="serial-no">S/NO</th>
-                <th class="matric-no">Matric No</th>
-                <th>Full Name</th>
-                <th>Programme</th>
-                <th>Level</th>
-              </tr>
-            </thead>
-            <tbody id="show_data">
-              <% if (results.length !== 0) { %>
-              <div>
-                <% for (let i = 0; i < results.length; i++) { %>
-                <tr>
-                  <td><%= i + 1 %></td>
-                  <td><%= results[i].MatriculationNo %></td>
-                  <td>
-                    <%= results[i].Surname + ' ' + results[i].Middlename + ' ' +
-                    results[i].Firstname %>
-                  </td>
-                  <td><%= results[i].Programme %></td>
-                  <td><%= results[i].Level %></td>
-                </tr>
-                <% } %>
-              </div>
-              <% } else { %>
-              <h2>No data</h2>
-              <% } %>
-            </tbody>
-          </table>
+        <div class="registration-container">
+          <div id="student_info"></div>
+          <div id="dept_lvl"></div>
+          <div id="course_list"></div>
         </div>
       </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script src="js/registration.js"></script>
   </body>
 </html>
