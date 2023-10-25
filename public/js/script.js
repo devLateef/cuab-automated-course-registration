@@ -16,12 +16,13 @@ async function getStudent() {
   <td> ${data.results[0].Level}</td>
 </tr>
   `;
-}
+};
 
 btn.addEventListener('click', getStudent);
 
 input.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
     getStudent();
+    getCourse();
   }
 });

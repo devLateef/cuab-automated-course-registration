@@ -1,3 +1,4 @@
+/* Dev Lateef */
 .container{
     border-radius: 2rem;
     padding: 1rem;
@@ -10,7 +11,24 @@
 .btn-group{
     margin-top: 1rem;
 }
-.btn-group .btn{
+.btn-group .code-btn, .btn-group .fetch-btn{
     padding: .5rem;
     cursor: pointer;
+};
+
+.table {
+    width: 90%;
+    margin: 2rem auto 0 auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    table-layout: fixed;
+    margin-top: 4rem;
+}
+th,
+td {
+    border: 1px solid black;
+    padding: 2px 5px;
 }
