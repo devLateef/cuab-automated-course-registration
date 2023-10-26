@@ -64,6 +64,7 @@ async function filterByDeptLevel() {
     `/filter?department=${studentInfo.Department}&level=${studentInfo.Level}`,
   );
   const data = await res.json();
+  console.log(data);
   deptLevel.innerHTML = '';
   deptLevel.innerHTML += `
     <section>
@@ -75,6 +76,7 @@ async function filterByDeptLevel() {
     <table>
     <thead>
       <tr>
+        <th> <input type="checkbox"/> </th>
         <th class="serial-no">S/NO</th>
         <th class="matric-no">Course Code</th>
         <th>Course Title</th>
@@ -94,6 +96,7 @@ async function filterByDeptLevel() {
     const result = data[index];
     tableData.innerHTML += `<tr>
     <td><input type="checkbox"/></td>
+    <td>${index + 1}</td>
     <td>${result.CourseCode}</td>
     <td>
       ${result.CourseTitle}
@@ -111,3 +114,11 @@ input.addEventListener('keydown', function (event) {
     getStudent();
   }
 });
+
+
+
+// function toggleAll(check){
+//   if(check.checked === true){
+//     checkboxes = check.checked
+//   }
+// }

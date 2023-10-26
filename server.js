@@ -30,10 +30,14 @@ app.use(stdRoutes);
 app.use(courseRegRoutes);
 app.use(courseRoutes);
 
+// const DataTable = require('datatables.net-dt')
+// let table = new DataTable('#my_table', {
+//   responsive: true
+// });
 
-app.get('/coursemanager', (req, res) => {
-  res.render('coursemanager');
-});
+// app.get('/coursemanager', (req, res) => {
+//   res.render('coursemanager');
+// });
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

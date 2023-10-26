@@ -16,6 +16,11 @@
     cursor: pointer;
 };
 
+.btn-group .fetch-btn a {
+    text-decoration: none;
+    display: inline-block;
+}
+
 .table {
     width: 90%;
     margin: 2rem auto 0 auto;
