@@ -71,7 +71,7 @@ footer {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  width: 20%;
+  width: 18%;
   background-color: #3a3633;
   height: 100%; /* Full height */
   position: fixed; /* Make it stick, even on scroll */
@@ -94,7 +94,7 @@ footer {
   margin-left: 5px;
 }
 .main {
-  margin-left: 20%;
+  margin-left: 18%;
   background-color: rgb(255, 255, 255);
   min-height: 100vh;
 }
