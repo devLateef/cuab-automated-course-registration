@@ -7,9 +7,8 @@ const getCourseRegView = asyncHandler(async (req, res) => {
 
 const getCourses = asyncHandler(async (req, res) => {
   const { department, level } = req.query;
-  console.log(department, level);
   const sqlQuery = 'SELECT * FROM courses WHERE level = ? AND Dept = ?';
-  db.query(sqlQuery, [level, department], (err, results, fields) => {
+  db.query(sqlQuery, [level, department], (err, results) => {
     if (err) return err.message;
     res.status(200).json(results);
   });

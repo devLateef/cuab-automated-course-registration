@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const db = require('../dbconfig/db');
 
 const getAllCourses = asyncHandler(async(req, res)=>{
-    const sql = 'SELECT * FROM courses LIMIT 20'
+    const sql = 'SELECT * FROM courses'
     db.query(sql, (err, results)=>{
         if(err) return err.message;
         res.status(200).render('coursemanager', { results });

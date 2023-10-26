@@ -23,6 +23,5 @@ btn.addEventListener('click', getStudent);
 input.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
     getStudent();
-    getCourse();
   }
 });
