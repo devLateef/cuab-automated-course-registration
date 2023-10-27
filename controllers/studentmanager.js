@@ -22,7 +22,7 @@ const getStudents = asyncHandler((req, res) => {
 
 const getDahsboard = asyncHandler((req, res) => {
   const allStdQuery =
-    'SELECT COUNT(*) AS data FROM student_data UNION SELECT COUNT(*) FROM courses UNION SELECT COUNT(*) FROM registrations';
+    'SELECT COUNT(*) AS data FROM student_data UNION SELECT COUNT(*) FROM courses UNION SELECT COUNT(DISTINCT matricNo) FROM registrations';
 
   db.query(allStdQuery, (err, result) => {
     if (err) return err.message;
