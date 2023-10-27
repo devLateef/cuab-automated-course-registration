@@ -4,6 +4,7 @@ let showStudentData = document.getElementById('student_info');
 let deptLevel = document.getElementById('dept_lvl');
 let courseList = document.getElementById('course_list');
 let studentInfo;
+let regCourses = [];
 
 function generateStdInfo(ele, item) {
   ele.innerHTML = '';
@@ -41,8 +42,8 @@ function generateStdInfo(ele, item) {
             </tr>
           </table>
           <div>
-          <div >
-            <button>Cancel</button>
+          <div style="margin: 1rem 0">
+            <button class="danger">Cancel</button>
             <button onclick="filterByDeptLevel()">Next</button>
           </div>
           </div> 
@@ -52,12 +53,31 @@ function generateStdInfo(ele, item) {
 function reg(checkBoxValue, courseReg, element) {
   let checkValues = checkBoxValue;
   let courseData = courseReg;
+  let clientRegData = JSON.parse(localStorage.getItem('registration'));
+  let { id } = JSON.parse(localStorage.getItem('studentInfo'));
 
   for (let index = 0; index < courseData.length; index++) {
     const result = courseData[index];
-
-    generateRow(element, result);
+    const isRegistered = clientRegData?.some(
+      (data) => parseFloat(data.courseId) === parseFloat(result.id),
+    );
+    generateRow(element, result, isRegistered);
   }
+
+  //
+  courseList.innerHTML = `<div class="container">
+  <div class="displayCourse">
+      
+  </div>
+  <button id="submit"><a href="/courseform/${id}">Submit</a></button>
+</div>`;
+  document.querySelector('.displayCourse').innerHTML = ''
+  for (let index = 0; index < clientRegData.length; index++) {
+    const element = clientRegData[index].code;
+    document.querySelector('.displayCourse').innerHTML += `<span>${element}<span`
+  }
+  
+
 }
 
 window.addEventListener('load', () => {
@@ -65,6 +85,9 @@ window.addEventListener('load', () => {
   let clientRegData = JSON.parse(localStorage.getItem('registration'));
   let clientCourseData = JSON.parse(localStorage.getItem('courseData'));
 
+  if (clientRegData) {
+    regCourses = clientRegData;
+  }
   if (clientStdData) {
     generateStdInfo(showStudentData, clientStdData);
   }
@@ -75,10 +98,22 @@ window.addEventListener('load', () => {
     <section>
       <div style='display: flex'>
         <div>
-          <select id='dept'>
-            <option value='Accouting'>Accounting</option>
-            <option value='Economics'>Economics</option>
-          </select>
+        <select id='dept'>
+        <option value='Nursing'>Nursing</option>
+        <option value='Accounting'>Accounting</option>
+        <option value='Architecture'>Architecture</option>
+        <option value='Islamic Studies'>Islamic Studies</option>
+        <option value='Law'>Law</option>
+        <option value='Business Administration'>Business Administration</option>
+        <option value='Biochemistry'>Biochemistry</option>
+        <option value='Computer Science'>Computer Science</option>
+        <option value='Mass Communication'>Mass Communication</option>
+        <option value='Economics with Operations Research'>Economics with Operations Research</option>
+        <option value='Microbiology'>Microbiology</option>
+        <option value='Political Science and International Studies'>Political Science and International Studies</option>
+        <option value='Human Anatomy'>Human Anatomy</option>
+        <option value='Physiology'>Physiology</option>
+      </select>
         </div>
         <div>
           <select id='level'>
@@ -112,55 +147,92 @@ window.addEventListener('load', () => {
     </section>
   `;
 
-    const checkAllBox = document.getElementById('check_all');
     const tableData = document.getElementById('show_data');
-    // tableData.inn;
-    reg(clientRegData, clientCourseData, tableData);
-    checkAllBox.checked = clientRegData ? clientRegData['check_all'] : false;
-    const checkboxValues = {};
-    function checkAll(e) {
-      console.log(e.target);
-      // localStorage.setItem('registration', JSON.stringify(checkboxValues));
+    const { dept, level } = JSON.parse(localStorage.getItem('filterParameter'));
+    if (JSON.parse(localStorage.getItem('filterParameter'))) {
+      document.querySelector('#dept').value = dept;
+      document.querySelector('#level').value = level;
+    } else {
+      document.querySelector('#dept').value = clientStdData.Department;
+      document.querySelector('#level').value = clientStdData.Level;
     }
 
-    checkAllBox.addEventListener('click', checkAll);
+    document.querySelector('#dept')?.addEventListener('change', changed);
+    document.querySelector('#level')?.addEventListener('change', changed);
+    reg(clientRegData, clientCourseData, tableData);
   }
+  deptLevel.addEventListener('click', addAndRemove);
 });
-let regCourses = [];
-function addAndRemove(e) {
+
+async function changed() {
+  const data = await filter(
+    document.querySelector('#dept').value,
+    document.querySelector('#level').value,
+  );
+  document.getElementById('show_data').innerHTML = '';
+  reg({}, data, document.getElementById('show_data'));
+  localStorage.setItem(
+    'filterParameter',
+    JSON.stringify({
+      dept: document.querySelector('#dept').value,
+      level: document.querySelector('#level').value,
+    }),
+  );
+}
+
+async function addAndRemove(e) {
+  regCourses = JSON.parse(localStorage.getItem('registration'));
   let { MatriculationNo, id } = JSON.parse(localStorage.getItem('studentInfo'));
-  const index = regCourses.findIndex((obj) => obj.id === e.target.dataset.cid);
+  const courseId = e.target.dataset.cid;
+  const courseCode = e.target.dataset.ccode;
+  const index = regCourses.findIndex(
+    (obj) => parseFloat(obj.courseId) === parseFloat(courseId),
+  );
 
   if (e.target.classList.contains('minus')) {
-    e.target.classList.add('hide');
-    e.target.previousElementSibling.classList.remove('hide');
     if (index !== -1) {
+      const res = await fetch(`/course-registration/${courseId}`, {
+        method: 'DELETE',
+      });
+      // const data = await res.json();
+      e.target.classList.add('hide');
+      e.target.previousElementSibling.classList.remove('hide');
       regCourses.splice(index, 1);
     }
-    regCourses.splice(index, 1);
   } else if (e.target.classList.contains('plus')) {
-    e.target.classList.add('hide');
-    e.target.nextElementSibling.classList.remove('hide');
     if (index === -1) {
-      regCourses.push({
-        stdId: id,
-        courseId: e.target.dataset.cid,
+      let body = {
+        studentId: id,
+        courseId,
         matricNo: MatriculationNo,
+        code: courseCode
+      };
+      const res = await fetch('/course-registration', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
       });
+      const data = await res.json();
+      regCourses.push(body);
+      e.target.classList.add('hide');
+      e.target.nextElementSibling.classList.remove('hide');
     }
   }
-  console.log(regCourses);
+  localStorage.setItem('registration', JSON.stringify(regCourses));
 }
-deptLevel.addEventListener('click', addAndRemove);
-function generateRow(ele, item) {
-  let clientRegData = JSON.parse(localStorage.getItem('registration'));
 
-  if (clientRegData) {
-    ele.innerHTML += `<tr id="${item.id}">
+function generateRow(ele, item, registered = false) {
+  ele.innerHTML += `<tr id="${item.id}">
       <td id="${item.CourseCode}">
-        <div>
-          <button data-ccode="${item.CourseCode}" data-cid="${item.id}" class="plus "">+</button>
-          <button data-ccode="${item.CourseCode}" data-cid="${item.id}" class="minus hide">-</button>
+        <div id="add_remove">
+          <button data-ccode="${item.CourseCode}" data-cid="${
+            item.id
+          }" class="plus ${registered ? 'hide' : ''}">+</button>
+          <button data-ccode="${item.CourseCode}" data-cid="${
+            item.id
+          }" class="minus danger ${registered ? '' : 'hide'}">-</button>
         </div>
       </td>
       <td>${item.CourseCode}</td>
@@ -168,51 +240,66 @@ function generateRow(ele, item) {
       <td>${item.CourseUnit}</td>
       <td>${item.CourseStatus}</td>
     </tr>`;
-  } else {
-    ele.innerHTML += `<tr id="${item.id}">
-      <td>
-        <div>
-          <button data-ccode="${item.CourseCode}" data-cid="${item.id}" id="${item.CourseCode}" class="plus">+</button>
-          <button data-ccode="${item.CourseCode}" data-cid="${item.id}" class="minus hide">-</button>
-        </div>
-      </td>
-      <td>${item.CourseCode}</td>
-      <td>${item.CourseTitle}</td>
-      <td>${item.CourseUnit}</td>
-      <td>${item.CourseStatus}</td>
-    </tr>`;
-  }
 }
 
 async function getStudent() {
   const res = await fetch(`/course-registration/${input.value}`);
   const data = await res.json();
+  const isExistRes = await fetch(`/registered/${input.value}`);
+  const isExist = await isExistRes.json();
 
   if (data.results[0]) {
     generateStdInfo(showStudentData, data.results[0]);
+    localStorage.setItem(
+      'filterParameter',
+      JSON.stringify({
+        dept: data.results[0].Department,
+        level: data.results[0].Level,
+      }),
+    );
+    localStorage.setItem('studentInfo', JSON.stringify(data.results[0]));
   }
-  localStorage.setItem('studentInfo', JSON.stringify(data.results[0]));
+  if (isExist) {
+    localStorage.setItem(
+      'filterParameter',
+      JSON.stringify({
+        dept: data.results[0].Department,
+        level: data.results[0].Level,
+      }),
+    );
+    localStorage.setItem('registration', JSON.stringify(isExist));
+  }
 }
-
-async function filterByDeptLevel() {
-  // showStudentData.style.display = 'none';
-  let clientData = JSON.parse(localStorage.getItem('studentInfo'));
-  const res = await fetch(
-    `/filter?department=${clientData.Department}&level=${clientData.Level}`,
-  );
+async function filter(dept, lvl) {
+  const res = await fetch(`/filter?department=${dept}&level=${lvl}`);
   const data = await res.json();
   localStorage.setItem('courseData', JSON.stringify(data));
-  JSON.parse(localStorage.getItem('registration'));
+  return data;
+}
+async function filterByDeptLevel() {
+  let clientData = JSON.parse(localStorage.getItem('studentInfo'));
+  const data = await filter(clientData.Department, clientData.Level);
 
-  console.log(data);
   deptLevel.innerHTML = '';
   deptLevel.innerHTML += `
     <section>
     <div style='display: flex'>
         <div>
           <select id='dept'>
-            <option value='Accouting'>Accounting</option>
-            <option value='Economics'>Economics</option>
+            <option value='Nursing'>Nursing</option>
+            <option value='Accounting'>Accounting</option>
+            <option value='Architecture'>Architecture</option>
+            <option value='Islamic Studies'>Islamic Studies</option>
+            <option value='Law'>Law</option>
+            <option value='Business Administration'>Business Administration</option>
+            <option value='Biochemistry'>Biochemistry</option>
+            <option value='Computer Science'>Computer Science</option>
+            <option value='Mass Communication'>Mass Communication</option>
+            <option value='Economics with Operations Research'>Economics with Operations Research</option>
+            <option value='Microbiology'>Microbiology</option>
+            <option value='Political Science and International Studies'>Political Science and International Studies</option>
+            <option value='Human Anatomy'>Human Anatomy</option>
+            <option value='Physiology'>Physiology</option>
           </select>
         </div>
         <div>
@@ -245,24 +332,15 @@ async function filterByDeptLevel() {
     </section>
   `;
 
-  const checkAllBox = document.getElementById('check_all');
-
   const tableData = document.getElementById('show_data');
-  // function checkAll() {
-  //   const checkboxValues = {};
-  //   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  //   checkboxes.forEach(function (checkbox) {
-  //     checkbox.checked = true;
-  //     checkboxValues[checkbox.id] = checkbox.checked;
-  //   });
 
-  //   localStorage.setItem('registration', JSON.stringify(checkboxValues));
-  // }
+  document.querySelector('#dept').value = clientData.Department;
+  document.querySelector('#level').value = clientData.Level;
 
+  document.querySelector('#dept')?.addEventListener('change', changed);
+  document.querySelector('#level')?.addEventListener('change', changed);
   reg({}, data, tableData);
-  checkAllBox.addEventListener('click', checkAll);
 }
-
 btn.addEventListener('click', getStudent);
 
 input.addEventListener('keydown', function (event) {
@@ -270,9 +348,3 @@ input.addEventListener('keydown', function (event) {
     getStudent();
   }
 });
-
-// function toggleAll(check){
-//   if(check.checked === true){
-//     checkboxes = check.checked
-//   }
-// }
