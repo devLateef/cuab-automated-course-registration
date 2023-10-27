@@ -5,7 +5,6 @@ const displayData = document.getElementById('display_data');
 async function getCourse(){
     const response = await fetch(`/course/${courseCode.value}`);
     const result = await response.json();
-    console.log(result);
     displayData.innerHTML = '';
     displayData.innerHTML += `
     <tr>
