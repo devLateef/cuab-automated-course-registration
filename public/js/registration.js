@@ -71,13 +71,13 @@ function reg(checkBoxValue, courseReg, element) {
   </div>
   <button id="submit"><a href="/courseform/${id}">Submit</a></button>
 </div>`;
-  document.querySelector('.displayCourse').innerHTML = ''
+  document.querySelector('.displayCourse').innerHTML = '';
   for (let index = 0; index < clientRegData.length; index++) {
     const element = clientRegData[index].code;
-    document.querySelector('.displayCourse').innerHTML += `<span>${element}<span`
+    document.querySelector(
+      '.displayCourse',
+    ).innerHTML += `<span>${element}<span`;
   }
-  
-
 }
 
 window.addEventListener('load', () => {
@@ -205,7 +205,7 @@ async function addAndRemove(e) {
         studentId: id,
         courseId,
         matricNo: MatriculationNo,
-        code: courseCode
+        code: courseCode,
       };
       const res = await fetch('/course-registration', {
         method: 'POST',
