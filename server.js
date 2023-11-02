@@ -7,6 +7,9 @@ const courseRoutes = require('./routes/coursesmanagerroute');
 const courseRegRoutes = require('./routes/courseregistrationroute');
 const authRoutes = require('./routes/authroute');
 const { notFound, errorHandler } = require('./middlewares/errorHandler');
+const {
+  redirectIfNotAuthenticated,
+} = require('./middlewares/redirectIfAuthenticated');
 
 require('./dbconfig/db.js');
 
@@ -30,6 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Auth
 app.use(authRoutes);
+app.use(redirectIfNotAuthenticated);
 
 // Student Route
 app.use(stdRoutes);
