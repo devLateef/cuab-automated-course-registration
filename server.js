@@ -17,7 +17,7 @@ dotenv.config();
 
 const app = express();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 80;
 
 app.use(express.static('public'));
 app.use(
