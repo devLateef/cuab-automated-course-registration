@@ -131,9 +131,7 @@ window.addEventListener('load', () => {
       <table>
       <thead>
         <tr>
-          <th class="serial-no">
-            <div id="check_all"><button class="plus">+</button><button class="minus">-</button></div>
-          </th>
+          <th class="serial-no"></th>
           <th class="matric-no">Course Code</th>
           <th>Course Title</th>
           <th>Unit</th>
