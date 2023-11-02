@@ -34,8 +34,15 @@ const getDahsboard = asyncHandler((req, res) => {
   });
 });
 
+const logout = asyncHandler(async (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
+});
+
 module.exports = {
   getStudent,
   getStudents,
   getDahsboard,
+  logout,
 };

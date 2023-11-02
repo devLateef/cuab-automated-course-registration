@@ -55,10 +55,9 @@ const generateCourseForm = asyncHandler(async (req, res) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    
+
     // Assuming "courseForm" is an EJS template
     res.status(200).render('courseForm', { data: results });
-    
   });
 });
 
