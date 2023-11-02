@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Course Form</title>
-    <link rel="stylesheet" href="css/courseform.css" />
+    <link rel="stylesheet" href="/css/courseform.css" />
   </head>
   <body>
     <div class="container">
       <div>
         <header>
           <div class="logo">
-            <img src="img/CrescentLogo.jpeg" alt="school-logo" />
+            <img src="/img/CrescentLogo.jpeg" alt="school-logo" />
           </div>
           <div class="cuab">
             <h2>CRESCENT UNIVERSITY, ABEOKUTA</h2>
@@ -30,27 +30,28 @@
         <section class="student-info">
           <table>
             <caption style="margin-bottom: 0.5rem">
-              COURSE FORM REGISTRATION FORM - UNDERGRADUATE (FULL TIME)
-              <br />
-              <span style="font-size: 11px">PLEASE PRINT QUADRUPLICATE</span>
+              STUDENT INFO
             </caption>
             <tr>
               <th>MATRIC NO:</th>
-              <td>S123501001</td>
+              <td><%=data[0].MatriculationNo%></td>
               <th>FULL NAME:</th>
-              <td>LUQMAN ADENIYI</td>
+              <td>
+                <%=data[0].Surname + ' ' + data[0].Middlename + ' ' +
+                data[0].Firstname%>
+              </td>
             </tr>
             <tr>
               <th>COLLEGE:</th>
-              <td>COLLEGE OF HEALTH SCIENCES</td>
+              <td><%=data[0].College%></td>
               <th>DEPARTMENT:</th>
-              <td>NURSING</td>
+              <td><%=data[0].Dept%></td>
             </tr>
             <tr>
               <th>PROGRAMME:</th>
-              <td>B.Sc NURSING</td>
+              <td><%=data[0].Programme%></td>
               <th>LEVEL:</th>
-              <td>500</td>
+              <td><%=data[0].Level%></td>
             </tr>
             <tr>
               <th>SESSION:</th>
@@ -79,177 +80,20 @@
                 </tr>
               </thead>
               <tbody>
+                <% if(data.length > 0){%> <% for(let i = 0; i < data.length;
+                i++){%> <% const item = data[i]%>
                 <tr>
-                  <td>1</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
+                  <td><%= i + 1%></td>
+                  <td><%= item.CourseCode%></td>
+                  <td><%= item.CourseTitle%></td>
+                  <td><%= item.CourseUnit%></td>
+                  <td><%= item.CourseStatus%></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>10</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>11</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>12</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>13</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>14</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>15</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td>16</td>
-                  <td>ACC101</td>
-                  <td>Accouting in one hundred level</td>
-                  <td>1</td>
-                  <td>C</td>
-                </tr>
+                <%}%> <%}%>
               </tbody>
             </table>
-            <p>Total Number of Unit Registered: 23</p>
+            <% let sum = data.reduce((accumulator, currentValue) => { return accumulator + currentValue.CourseUnit; }, 0); %>
+            <p>Total Number of Unit Registered: <%= sum %></p>
           </section>
           <section class="authorization">
             <div class="student-signature">

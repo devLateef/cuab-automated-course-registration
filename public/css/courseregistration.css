@@ -25,3 +25,30 @@ td {
 .matric-no + th + th {
   width: 300px;
 }
+.container{
+  padding: 4rem 0;
+}
+.displayCourse{
+margin-bottom: 1.5rem;
+}
+.displayCourse span{
+  background-color: #CCC;
+  padding: .3rem .8rem;
+  border-radius: 30px;
+}
+a{
+  all: unset;
+}
+button{
+  background-color: #0275d8;
+  color: #FFF;
+  border: none;
+  padding: .4rem 1rem;
+  border-radius: 25px;
+  /* font-size: 1rem; */
+  font-weight: bold;
+  cursor: pointer;
+}
+button.danger{
+  background-color: #d9534f;
+}

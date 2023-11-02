@@ -19,9 +19,6 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/coursereg', (req, res) => {
-  res.render('courseForm');
-});
 
 // Student Route
 app.use(stdRoutes);
@@ -30,14 +27,7 @@ app.use(stdRoutes);
 app.use(courseRegRoutes);
 app.use(courseRoutes);
 
-// const DataTable = require('datatables.net-dt')
-// let table = new DataTable('#my_table', {
-//   responsive: true
-// });
 
-// app.get('/coursemanager', (req, res) => {
-//   res.render('coursemanager');
-// });
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
