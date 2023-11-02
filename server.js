@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const stdRoutes = require('./routes/studentmanagerroute');
 const courseRoutes = require('./routes/coursesmanagerroute');
 const courseRegRoutes = require('./routes/courseregistrationroute');
+const authRoutes = require('./routes/authroute');
 const { notFound, errorHandler } = require('./middlewares/errorHandler');
 
 require('./dbconfig/db.js');
@@ -19,6 +20,9 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+//Auth
+app.use(authRoutes)
 
 // Student Route
 app.use(stdRoutes);
