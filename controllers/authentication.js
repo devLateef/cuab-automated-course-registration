@@ -1,20 +1,22 @@
 const asyncHandler = require('express-async-handler');
-
-const user = { username: 'admin', password: 'ictec2023' };
+const db = require('../dbconfig/db')
 
 const getAuthPage = asyncHandler(async (req, res) => {
   res.render('login');
 });
 const authUser = asyncHandler(async (req, res) => {
+  
   const { username, password } = req.body;
-  if (
-    username.toLowerCase() === user.username &&
-    password.toLowerCase() === user.password
-  ) {
-    res.redirect('/dashboard');
-  }else{
-    res.render('/')
-  }
+  const sqlQuery = 'SELECT * FROM user WHERE username = ? AND password = ?'
+  db.query(sqlQuery, [username, password], (err, result) => {
+    if (err) return err.message;
+    if(result.length === 0){
+      res.status(403).redirect('/');
+    }else{
+      res.status(302).redirect('/dashboard');
+    }
+  });
+  
 });
 
 module.exports = {
