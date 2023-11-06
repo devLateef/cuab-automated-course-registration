@@ -22,8 +22,24 @@ const getStudent = asyncHandler(async (req, res) => {
         studentData: results,
         courseData: null,
       });
-      // res.json(results);
     });
+    
+  } catch (err) {
+    console.error('Database query error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+const getStudentJson = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const sqlQuery = `SELECT * FROM student_data WHERE MatriculationNo = ?`;
+  try {
+    db.query(sqlQuery, [id], (err, results) => {
+      if (err) {
+        throw err;
+      }
+      res.status(200).json(results)
+    });
+    
   } catch (err) {
     console.error('Database query error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -38,17 +54,17 @@ const getCourses = asyncHandler(async (req, res) => {
       if (err) {
         throw err;
       }
-
       db.query(sqlQuery2, [matricNo], (err, registrationResults) => {
+        if (err) {
+          throw err;
+        }
         const finalResult = courseResults.map((result) => {
-          if (err) {
-            throw err;
-          }
           const isRegistered = registrationResults.some(
             (data) => parseFloat(data.courseId) === parseFloat(result.id),
           );
           return { ...result, selected: isRegistered };
         });
+        console.log(finalResult)
         res.status(200).render('courseregistration', {
           courseData: finalResult,
           studentData: null,
@@ -117,7 +133,7 @@ const generateCourseForm = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const sqlQuery =
-    'SELECT * FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.id = ?';
+    'SELECT * FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
 
   try {
     db.query(sqlQuery, [id], (err, results) => {
@@ -141,4 +157,6 @@ module.exports = {
   addCourse,
   getStudent,
   getCourseRegView,
+  // registeredCourse,
+  getStudentJson
 };
