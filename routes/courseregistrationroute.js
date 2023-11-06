@@ -6,17 +6,16 @@ const {
   generateCourseForm,
   removeCourse,
   addCourse,
-  getCourseRegView,
-  registeredCourse,
+  getStudent,
+  getCourseRegView
 } = require('../controllers/courseregistration');
-const { getStudent } = require('../controllers/studentmanager');
 
 // The id is refering to the student's matric no
 router.get('/course-registration', getCourseRegView);
-router.get('/filter', getCourses);
+router.get('/course-registration/q', getCourses);
 router.get('/course-registration/:id', getStudent);
 router.get('/courseform/:id', generateCourseForm);
-router.get('/registered/:id', registeredCourse);
+// router.get('/registered/:id', registeredCourse);
 router.delete('/course-registration/:id', removeCourse);
 router.post('/course-registration', addCourse);
 

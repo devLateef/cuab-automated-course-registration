@@ -6,49 +6,49 @@ let courseList = document.getElementById('course_list');
 let studentInfo;
 let regCourses = [];
 
-function generateStdInfo(ele, item) {
-  ele.innerHTML = '';
-  ele.innerHTML += `
-          <div>
-            <table>
-            <caption style="margin-bottom: 0.5rem">
-              STUDENT INFO
-            </caption>
-            <tr>
-              <th>MATRIC NO:</th>
-              <td>${item.MatriculationNo}</td>
-              <th>FULL NAME:</th>
-              <td>
-                ${item.Surname + ' ' + item.Middlename + ' ' + item.Firstname}
-              </td>
-            </tr>
-            <tr>
-              <th>COLLEGE:</th>
-              <td>${item.College}</td>
-              <th>DEPARTMENT:</th>
-              <td>${item.Department}</td>
-            </tr>
-            <tr>
-              <th>PROGRAMME:</th>
-              <td>${item.Programme}</td>
-              <th>LEVEL:</th>
-              <td>${item.Level}</td>
-            </tr>
-            <tr>
-              <th>SESSION:</th>
-              <td>2023/2024</td>
-              <th>SEMESTER:</th>
-              <td>FIRST</td>
-            </tr>
-          </table>
-          <div>
-          <div style="margin: 1rem 0">
-            <button class="danger">Cancel</button>
-            <button onclick="filterByDeptLevel()">Next</button>
-          </div>
-          </div> 
-  `;
-}
+// function generateStdInfo(ele, item) {
+//   ele.innerHTML = '';
+//   ele.innerHTML += `
+//           <div>
+//             <table>
+//             <caption style="margin-bottom: 0.5rem">
+//               STUDENT INFO
+//             </caption>
+//             <tr>
+//               <th>MATRIC NO:</th>
+//               <td>${item.MatriculationNo}</td>
+//               <th>FULL NAME:</th>
+//               <td>
+//                 ${item.Surname + ' ' + item.Middlename + ' ' + item.Firstname}
+//               </td>
+//             </tr>
+//             <tr>
+//               <th>COLLEGE:</th>
+//               <td>${item.College}</td>
+//               <th>DEPARTMENT:</th>
+//               <td>${item.Department}</td>
+//             </tr>
+//             <tr>
+//               <th>PROGRAMME:</th>
+//               <td>${item.Programme}</td>
+//               <th>LEVEL:</th>
+//               <td>${item.Level}</td>
+//             </tr>
+//             <tr>
+//               <th>SESSION:</th>
+//               <td>2023/2024</td>
+//               <th>SEMESTER:</th>
+//               <td>FIRST</td>
+//             </tr>
+//           </table>
+//           <div>
+//           <div style="margin: 1rem 0">
+//             <button class="danger">Cancel</button>
+//             <button onclick="filterByDeptLevel()">Next</button>
+//           </div>
+//           </div>
+//   `;
+// }
 
 function reg(checkBoxValue, courseReg, element) {
   let checkValues = checkBoxValue;
@@ -163,35 +163,54 @@ window.addEventListener('load', () => {
 });
 
 async function changed() {
-  const data = await filter(
-    document.querySelector('#dept').value,
-    document.querySelector('#level').value,
-  );
-  document.getElementById('show_data').innerHTML = '';
-  reg({}, data, document.getElementById('show_data'));
+  // const data = await filter(
+  //   document.querySelector('#dept').value,
+  //   document.querySelector('#level').value,
+  // );
+  // document.getElementById('show_data').innerHTML = '';
+  // reg({}, data, document.getElementById('show_data'));
+  // localStorage.setItem(
+  //   'filterParameter',
+  //   JSON.stringify({
+  //     dept: document.querySelector('#dept').value,
+  //     level: document.querySelector('#level').value,
+  //   }),
+  // );
+  let dept = document.getElementById('dept');
+  let lvl = document.getElementById('level');
   localStorage.setItem(
-    'filterParameter',
-    JSON.stringify({
-      dept: document.querySelector('#dept').value,
-      level: document.querySelector('#level').value,
-    }),
+    'filterParam',
+    JSON.stringify({ dept: dept.value, lvl: lvl.value }),
   );
 }
-
+async function getCourses() {
+  // let dept = document.getElementById('dept');
+  // let lvl = document.getElementById('level');
+  let { dept, lvl } = JSON.parse(localStorage.getItem('filterParam'));
+  const searchParams = new URLSearchParams(window.location.search);
+  localStorage.setItem(
+    'studentInfo',
+    JSON.stringify({ matricNo: searchParams.get('matricNo') }),
+  );
+  location.href = `/course-registration/q?department=${dept}&level=${lvl}&matricNo=${searchParams.get(
+    'matricNo',
+  )}`;
+}
+document.getElementById('get_courses').addEventListener('click', getCourses);
 async function addAndRemove(e) {
   regCourses = JSON.parse(localStorage.getItem('registration'));
-  let { MatriculationNo, id } = JSON.parse(localStorage.getItem('studentInfo'));
-  const courseId = e.target.dataset.cid;
-  const courseCode = e.target.dataset.ccode;
-  const index = regCourses.findIndex(
-    (obj) => parseFloat(obj.courseId) === parseFloat(courseId),
-  );
+  let { matricNo } = JSON.parse(localStorage.getItem('studentInfo'));
+  // const courseId = e.target.dataset.cid;
+  // const courseCode = e.target.dataset.ccode;
+  // const index = regCourses.findIndex(
+  //   (obj) => parseFloat(obj.courseId) === parseFloat(courseId),
+  // );
 
   if (e.target.classList.contains('minus')) {
     if (index !== -1) {
-      const res = await fetch(`/course-registration/${courseId}`, {
-        method: 'DELETE',
-      });
+      // const res = await fetch(`/course-registration/${courseId}`, {
+      //   method: 'DELETE',
+      // });
       // const data = await res.json();
       e.target.classList.add('hide');
       e.target.previousElementSibling.classList.remove('hide');
@@ -202,17 +221,17 @@ async function addAndRemove(e) {
       let body = {
         studentId: id,
         courseId,
-        matricNo: MatriculationNo,
+        matricNo, 
         code: courseCode,
       };
-      const res = await fetch('/course-registration', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json();
+      // const res = await fetch('/course-registration', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(body),
+      // });
+      // const data = await res.json();
       regCourses.push(body);
       e.target.classList.add('hide');
       e.target.nextElementSibling.classList.remove('hide');
@@ -220,7 +239,7 @@ async function addAndRemove(e) {
   }
   localStorage.setItem('registration', JSON.stringify(regCourses));
 }
-
+document.getElementById('add_remove')?.addEventListener('click', addAndRemove);
 function generateRow(ele, item, registered = false) {
   ele.innerHTML += `<tr id="${item.id}">
       <td id="${item.CourseCode}">
@@ -241,13 +260,14 @@ function generateRow(ele, item, registered = false) {
 }
 
 async function getStudent() {
-  const res = await fetch(`/course-registration/${input.value}`);
-  const data = await res.json();
+  // const res = await fetch(`/course-registration/${input.value}`);
+  // const data = await res.json();
+  location.href = `/course-registration/${input.value}`;
   const isExistRes = await fetch(`/registered/${input.value}`);
   const isExist = await isExistRes.json();
 
   if (data.results[0]) {
-    generateStdInfo(showStudentData, data.results[0]);
+    // generateStdInfo(showStudentData, data.results[0]);
     localStorage.setItem(
       'filterParameter',
       JSON.stringify({
@@ -339,6 +359,8 @@ async function filterByDeptLevel() {
   document.querySelector('#level')?.addEventListener('change', changed);
   reg({}, data, tableData);
 }
+document.querySelector('#dept')?.addEventListener('change', changed);
+document.querySelector('#level')?.addEventListener('change', changed);
 btn.addEventListener('click', getStudent);
 
 input.addEventListener('keydown', function (event) {

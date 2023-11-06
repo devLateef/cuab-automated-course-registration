@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Auth
 app.use(authRoutes);
-app.use(redirectIfNotAuthenticated);
+// app.use(redirectIfNotAuthenticated);
 
 // Student Route
 app.use(stdRoutes);

@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/app.css" />
-    <link rel="stylesheet" href="css/studentmanager.css" />
-    <link rel="stylesheet" href="css/courseregistration.css" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/studentmanager.css" />
+    <link rel="stylesheet" href="/css/courseregistration.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css"
@@ -21,18 +21,155 @@
           <h3>Matric No</h3>
           <input type="text" id="search_input" />
           <button id="search_btn">Fetch</button>
-          <!-- <button id="search_btn">
-            <a href="/student-manager">Fetch all</a>
-          </button> -->
         </div>
         <div class="registration-container">
-          <div id="student_info"></div>
-          <div id="dept_lvl"></div>
-          <div id="course_list"></div>
+          <div id="student_info">
+            <% if (studentData) { %>
+            <div>
+              <table>
+                <caption style="margin-bottom: 0.5rem">
+                  STUDENT INFO
+                </caption>
+                <tr>
+                  <th>MATRIC NO:</th>
+                  
+                  <td><%= studentData[0].MatriculationNo %></td>
+                  <th>FULL NAME:</th>
+                  <td>
+                    <%= studentData[0].Surname + ' ' + studentData[0].Middlename
+                    + ' ' + studentData[0].Firstname %>
+                  </td>
+                </tr>
+                <tr>
+                  <th>COLLEGE:</th>
+                  <td><%= studentData[0].College %></td>
+                  <th>DEPARTMENT:</th>
+                  <td><%= studentData[0].Department %></td>
+                </tr>
+                <tr>
+                  <th>PROGRAMME:</th>
+                  <td><%= studentData[0].Programme %></td>
+                  <th>LEVEL:</th>
+                  <td><%= studentData[0].Level %></td>
+                </tr>
+                <tr>
+                  <th>SESSION:</th>
+                  <td>2023/2024</td>
+                  <th>SEMESTER:</th>
+                  <td>FIRST</td>
+                </tr>
+              </table>
+              <div>
+                <div style="margin: 1rem 0">
+                  <button class="danger">Cancel</button>
+                  <button>
+                    <a
+                      href="/course-registration/q?department=<%= studentData[0].Department %>&level=<%= studentData[0].Level%>&matricNo=<%= studentData[0].MatriculationNo%>"
+                      >Next</a
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+            <% } else { %>
+            <h2>No Data</h2>
+            <% } %>
+          </div>
+          <div style="display: flex; align-items: center">
+            <div>
+              <select id="dept">
+                <option value="Nursing">Nursing</option>
+                <option value="Accounting">Accounting</option>
+                <option value="Architecture">Architecture</option>
+                <option value="Islamic Studies">Islamic Studies</option>
+                <option value="Law">Law</option>
+                <option value="Business Administration">
+                  Business Administration
+                </option>
+                <option value="Biochemistry">Biochemistry</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mass Communication">Mass Communication</option>
+                <option value="Economics with Operations Research">
+                  Economics with Operations Research
+                </option>
+                <option value="Microbiology">Microbiology</option>
+                <option value="Political Science and International Studies">
+                  Political Science and International Studies
+                </option>
+                <option value="Human Anatomy">Human Anatomy</option>
+                <option value="Physiology">Physiology</option>
+              </select>
+            </div>
+            <div>
+              <select id="level">
+                <option value="100L">100L</option>
+                <option value="200L">200L</option>
+                <option value="300L">300L</option>
+                <option value="400L">400L</option>
+                <option value="500L">500L</option>
+                <option value="FNG1">FNG1</option>
+                <option value="FNG2">FNG2</option>
+                <option value="FNG3">FNG3</option>
+              </select>
+            </div>
+            <div style="margin-left: 1rem">
+              <button id="get_courses">Fetch</button>
+            </div>
+          </div>
+          <div id="dept_lvl">
+            <%if (courseData) {%>
+            <section>
+              <div id="course_list">
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="serial-no"></th>
+                      <th class="matric-no">Course Code</th>
+                      <th>Course Title</th>
+                      <th>Unit</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="show_data">
+                    <% for(let i = 0; i < courseData.length; i++){%>
+                    <tr id="<%= courseData[i].id %>">
+                      <td id="<%= courseData[i].CourseCode %>">
+                        <div id="add_remove">
+                          <button
+                            class="plus <%= courseData[i].selected %> ? 'hide' : ''"
+                            data-ccode="<%= courseData[i].CourseCode %>"
+                            data-cid="<%= courseData[i].id %>"
+                          >
+                            +
+                          </button>
+                          <button
+                            class="minus danger <%= courseData[i].selected %> ? '' : hide"
+                            data-ccode="<%= courseData[i].CourseCode %>"
+                            data-cid="<%= courseData[i].id %>"
+                          >
+                            -
+                          </button>
+                        </div>
+                      </td>
+                      <td><%= courseData[i].CourseCode %></td>
+                      <td><%= courseData[i].CourseTitle %></td>
+                      <td><%= courseData[i].CourseUnit %></td>
+                      <td><%= courseData[i].CourseStatus %></td>
+                    </tr>
+
+                    <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <%}else{%>
+            <h2>No Table Data</h2>
+            <%}%>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="js/registration.js"></script>
+    <script src="/js/registration.js"></script>
   </body>
 </html>
