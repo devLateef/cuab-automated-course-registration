@@ -54,7 +54,7 @@ function reg(checkBoxValue, courseReg, element) {
   let checkValues = checkBoxValue;
   let courseData = courseReg;
   let clientRegData = JSON.parse(localStorage.getItem('registration'));
-  let { id } = JSON.parse(localStorage.getItem('studentInfo'));
+  let { MatriculationNo } = JSON.parse(localStorage.getItem('studentInfo'));
 
   for (let index = 0; index < courseData.length; index++) {
     const result = courseData[index];
@@ -69,7 +69,7 @@ function reg(checkBoxValue, courseReg, element) {
   <div class="displayCourse">
       
   </div>
-  <button id="submit"><a href="/courseform/${id}">Submit</a></button>
+  <button id="submit"><a href="/courseform/${MatriculationNo}">Submit</a></button>
 </div>`;
   document.querySelector('.displayCourse').innerHTML = '';
   for (let index = 0; index < clientRegData.length; index++) {
