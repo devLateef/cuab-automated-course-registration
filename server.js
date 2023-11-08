@@ -19,7 +19,6 @@ const app = express();
 
 const port = process.env.PORT || 80;
 
-app.use(express.static('public'));
 app.use(
   expressSession({
     secret: 'Coding is simple',
@@ -27,6 +26,7 @@ app.use(
     saveUninitialized: false,
   }),
 );
+app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

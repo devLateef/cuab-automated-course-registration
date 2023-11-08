@@ -4,7 +4,6 @@ let showStudentData = document.getElementById('student_info');
 let deptLevel = document.getElementById('dept_lvl');
 let courseList = document.getElementById('course_list');
 let studentInfo;
-let regCourses = [];
 
 // function generateStdInfo(ele, item) {
 //   ele.innerHTML = '';
@@ -65,19 +64,19 @@ function reg(checkBoxValue, courseReg, element) {
   }
 
   //
-//   courseList.innerHTML = `<div class="container">
-//   <div class="displayCourse">
-      
-//   </div>
-//   <button id="submit"><a href="/courseform/${id}">Submit</a></button>
-// </div>`;
-//   document.querySelector('.displayCourse').innerHTML = '';
-//   for (let index = 0; index < clientRegData.length; index++) {
-//     const element = clientRegData[index].code;
-//     document.querySelector(
-//       '.displayCourse',
-//     ).innerHTML += `<span>${element}<span`;
-//   }
+  //   courseList.innerHTML = `<div class="container">
+  //   <div class="displayCourse">
+
+  //   </div>
+  //   <button id="submit"><a href="/courseform/${id}">Submit</a></button>
+  // </div>`;
+  //   document.querySelector('.displayCourse').innerHTML = '';
+  //   for (let index = 0; index < clientRegData.length; index++) {
+  //     const element = clientRegData[index].code;
+  //     document.querySelector(
+  //       '.displayCourse',
+  //     ).innerHTML += `<span>${element}<span`;
+  //   }
 }
 
 window.addEventListener('load', () => {
@@ -159,7 +158,7 @@ window.addEventListener('load', () => {
     document.querySelector('#level')?.addEventListener('change', changed);
     reg(clientRegData, clientCourseData, tableData);
   }
-  deptLevel.addEventListener('click', addAndRemove);
+  // deptLevel.addEventListener('click', addAndRemove);
 });
 
 async function changed() {
@@ -187,81 +186,97 @@ async function getCourses() {
   // let dept = document.getElementById('dept');
   // let lvl = document.getElementById('level');
   let { dept, lvl } = JSON.parse(localStorage.getItem('filterParam'));
-  let { MatriculationNo } = JSON.parse(localStorage.getItem('studentInfo'))[0];
-  console.log(MatriculationNo)
-  location.href = `/course-registration/q?id=department=${dept}&level=${lvl}&matricNo=${MatriculationNo}`;
+  let { MatriculationNo, id } = JSON.parse(
+    localStorage.getItem('studentInfo'),
+  )[0];
+  console.log(MatriculationNo);
+  location.href = `/course-registration/q?id=${id}&department=${dept}&level=${lvl}&matricNo=${MatriculationNo}`;
 }
 
 document.getElementById('get_courses').addEventListener('click', getCourses);
-async function addAndRemove(e) {
-  regCourses = JSON.parse(localStorage.getItem('registration'));
-  let { matricNo } = JSON.parse(localStorage.getItem('studentInfo'));
-  // const courseId = e.target.dataset.cid;
-  // const courseCode = e.target.dataset.ccode;
-  // const index = regCourses.findIndex(
-  //   (obj) => parseFloat(obj.courseId) === parseFloat(courseId),
-  // );
 
+let regCourses = [];
+async function addAndRemove(e) {
+  // if (localStorage.getItem('registration')) {
+  //   regCourses = JSON.parse(localStorage.getItem('registration'));
+  // }
+  let { MatriculationNo, id } = JSON.parse(localStorage.getItem('studentInfo'))[0];
+  const courseId = e.target.dataset.cid;
+  const courseCode = e.target.dataset.ccode;
+
+  const index = regCourses.findIndex(
+    (obj) => parseFloat(obj.courseId) === parseFloat(courseId),
+  );
+
+  console.log(index);
+  console.log(e.target.classList.contains('minus'));
   if (e.target.classList.contains('minus')) {
   
-      // const res = await fetch(`/course-registration/${courseId}`, {
-      //   method: 'DELETE',
-      // });
-      // const data = await res.json();
+      const res = await fetch(`/course-registration/${courseId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
       e.target.classList.add('hide');
       e.target.previousElementSibling.classList.remove('hide');
       regCourses.splice(index, 1);
     
   } else if (e.target.classList.contains('plus')) {
-
+    if (index === -1) {
+      console.log(index)
       let body = {
         studentId: id,
         courseId,
-        matricNo, 
+        matricNo: MatriculationNo,
         code: courseCode,
       };
-      // const res = await fetch('/course-registration', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(body),
-      // });
-      // const data = await res.json();
       regCourses.push(body);
+      console.log(regCourses);
+      const res = await fetch('/courses/store', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(regCourses),
+      });
+      // const data = await res.json();
+  
       e.target.classList.add('hide');
       e.target.nextElementSibling.classList.remove('hide');
+    }
     
   }
-  localStorage.setItem('registration', JSON.stringify(regCourses));
+  console.log(regCourses)
+  // localStorage.setItem('registration', JSON.stringify(regCourses));
 }
-document.getElementById('add_remove')?.addEventListener('click', addAndRemove);
-function generateRow(ele, item, registered = false) {
-  ele.innerHTML += `<tr id="${item.id}">
-      <td id="${item.CourseCode}">
-        <div id="add_remove">
-          <button data-ccode="${item.CourseCode}" data-cid="${
-            item.id
-          }" class="plus ${registered ? 'hide' : ''}">+</button>
-          <button data-ccode="${item.CourseCode}" data-cid="${
-            item.id
-          }" class="minus danger ${registered ? '' : 'hide'}">-</button>
-        </div>
-      </td>
-      <td>${item.CourseCode}</td>
-      <td>${item.CourseTitle}</td>
-      <td>${item.CourseUnit}</td>
-      <td>${item.CourseStatus}</td>
-    </tr>`;
-}
+document.querySelectorAll('.add_remove')?.forEach((ele) => {
+  ele.addEventListener('click', addAndRemove);
+});
+// function generateRow(ele, item, registered = false) {
+//   ele.innerHTML += `<tr id="${item.id}">
+//       <td id="${item.CourseCode}">
+//         <div id="add_remove">
+//           <button data-ccode="${item.CourseCode}" data-cid="${
+//             item.id
+//           }" class="plus ${registered ? 'hide' : ''}">+</button>
+//           <button data-ccode="${item.CourseCode}" data-cid="${
+//             item.id
+//           }" class="minus danger ${registered ? '' : 'hide'}">-</button>
+//         </div>
+//       </td>
+//       <td>${item.CourseCode}</td>
+//       <td>${item.CourseTitle}</td>
+//       <td>${item.CourseUnit}</td>
+//       <td>${item.CourseStatus}</td>
+//     </tr>`;
+// }
 
 async function getStudent() {
   // const res = await fetch(`/course-registration/${input.value}`);
   // const data = await res.json();
   const res = await fetch(`/course-registrations/${input.value}`);
   const data = await res.json();
-  console.log(data)
-  localStorage.setItem('studentInfo', JSON.stringify(data))
+  console.log(data);
+  localStorage.setItem('studentInfo', JSON.stringify(data));
   location.href = `/course-registration/${input.value}`;
 
   // if (data.results[0]) {
@@ -366,3 +381,15 @@ input.addEventListener('keydown', function (event) {
     getStudent();
   }
 });
+
+
+document.getElementById('generate')?.addEventListener('click', () => {
+  let info = JSON.parse(localStorage.getItem('studentInfo'))
+  if(regCourses.length === 0){
+    let { MatriculationNo } = info[0]
+    location.href = `/courseform/${MatriculationNo}`
+  }else{
+    location.href = '/courses/save'
+  }
+  
+})

@@ -1,6 +1,6 @@
 const db = require('../dbconfig/db');
 const asyncHandler = require('express-async-handler');
-
+let courseAdded = [];
 const getCourseRegView = asyncHandler(async (req, res) => {
   try {
     res.render('courseregistration', { courseData: null, studentData: null });
@@ -23,7 +23,6 @@ const getStudent = asyncHandler(async (req, res) => {
         courseData: null,
       });
     });
-    
   } catch (err) {
     console.error('Database query error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -37,9 +36,8 @@ const getStudentJson = asyncHandler(async (req, res) => {
       if (err) {
         throw err;
       }
-      res.status(200).json(results)
+      res.status(200).json(results);
     });
-    
   } catch (err) {
     console.error('Database query error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -64,7 +62,6 @@ const getCourses = asyncHandler(async (req, res) => {
           );
           return { ...result, selected: isRegistered };
         });
-        console.log(finalResult)
         res.status(200).render('courseregistration', {
           courseData: finalResult,
           studentData: null,
@@ -97,17 +94,61 @@ const getCourses = asyncHandler(async (req, res) => {
 
 const addCourse = asyncHandler(async (req, res) => {
   const data = req.body;
-  const sqlQuery = 'INSERT INTO registrations SET ?';
+  // const sqlQuery = 'INSERT INTO registrations SET ?';
 
   try {
-    db.query(sqlQuery, data, (err, results) => {
-      if (err) {
-        throw err;
-      }
-      res.status(200).json(results);
-    });
+    // if (!Array.isArray(courseAdded)) {
+    //   courseAdded = [];
+    // }
+
+    // // Add data to the array
+    // courseAdded.push(data);
+
+    // Store the updated array in the session
+    req.session.myData = data;
+
+    console.log('Session data:', req.session.myData);
+    res.status(200).end();
   } catch (err) {
     console.error('Database query error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+const saveToDb = asyncHandler(async (req, res) => {
+  const data = req.session.myData;
+  const sqlQuery =
+    'INSERT INTO registrations (studentId, courseId, matricNo, code) VALUES (?, ?, ?, ?)';
+  console.log(req.session.myData);
+  try {
+    for (const item of req.session.myData) {
+      db.query(
+        sqlQuery,
+        [item.studentId, item.courseId, item.matricNo, item.code],
+        (err, results) => {
+          if (err) {
+            console.error('Error inserting data:', err);
+            // You can handle the error here, but don't throw it.
+          } else {
+            console.log('Inserted data:', results);
+          }
+        },
+      );
+    }
+
+    req.session.myData = [];
+    res.redirect(`/courseform/${data[0].matricNo}`);
+    // Move the db.end() call outside the loop and after all queries have completed.
+    // Close the database connection once all queries are finished.
+    // db.end((err) => {
+    //   if (err) {
+    //     console.error('Error closing the database connection:', err);
+    //   } else {
+    //     console.log('Database connection closed');
+    //   }
+    // });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -121,6 +162,7 @@ const removeCourse = asyncHandler(async (req, res) => {
       if (err) {
         throw err;
       }
+      console.log(results)
       res.status(200).json(results);
     });
   } catch (err) {
@@ -157,6 +199,6 @@ module.exports = {
   addCourse,
   getStudent,
   getCourseRegView,
-  // registeredCourse,
-  getStudentJson
+  saveToDb,
+  getStudentJson,
 };
