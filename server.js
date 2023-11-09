@@ -23,7 +23,7 @@ app.use(
   expressSession({
     secret: 'Coding is simple',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   }),
 );
 app.use(express.static('public'));

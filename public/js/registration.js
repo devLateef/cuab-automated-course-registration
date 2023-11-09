@@ -20,7 +20,6 @@ async function getCourses() {
   let { MatriculationNo, id } = JSON.parse(
     localStorage.getItem('studentInfo'),
   )[0];
-  console.log(MatriculationNo);
   location.href = `/course-registration/q?id=${id}&department=${dept}&level=${lvl}&matricNo=${MatriculationNo}`;
 }
 
@@ -39,21 +38,24 @@ async function addAndRemove(e) {
     (obj) => parseFloat(obj.courseId) === parseFloat(courseId),
   );
 
-  console.log(index);
-  console.log(e.target.classList.contains('minus'));
   if (e.target.classList.contains('minus')) {
   
       const res = await fetch(`/course-registration/${courseId}`, {
         method: 'DELETE',
       });
-      const data = await res.json();
+      regCourses.splice(index, 1);
+      const resp = await fetch('/courses/store', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(regCourses),
+      });
       e.target.classList.add('hide');
       e.target.previousElementSibling.classList.remove('hide');
-      regCourses.splice(index, 1);
-    
+
   } else if (e.target.classList.contains('plus')) {
     if (index === -1) {
-      console.log(index)
       let body = {
         studentId: id,
         courseId,
@@ -61,7 +63,6 @@ async function addAndRemove(e) {
         code: courseCode,
       };
       regCourses.push(body);
-      console.log(regCourses);
       const res = await fetch('/courses/store', {
         method: 'POST',
         headers: {
@@ -75,7 +76,6 @@ async function addAndRemove(e) {
     }
     
   }
-  console.log(regCourses)
   localStorage.setItem('registration', JSON.stringify(regCourses));
 }
 document.querySelectorAll('.add_remove')?.forEach((ele) => {
@@ -86,7 +86,6 @@ document.querySelectorAll('.add_remove')?.forEach((ele) => {
 async function getStudent() {
   const res = await fetch(`/course-registrations/${input.value}`);
   const data = await res.json();
-  console.log(data);
   localStorage.setItem('studentInfo', JSON.stringify(data));
   location.href = `/course-registration/${input.value}`;
 }
@@ -104,6 +103,9 @@ input.addEventListener('keydown', function (event) {
 
 document.getElementById('generate')?.addEventListener('click', () => {
   let info = JSON.parse(localStorage.getItem('studentInfo'))
+  if(JSON.parse(localStorage.getItem('registration'))){
+    regCourses = JSON.parse(localStorage.getItem('registration'))
+  }
   if(regCourses.length === 0){
     let { MatriculationNo } = info[0]
     location.href = `/courseform/${MatriculationNo}`

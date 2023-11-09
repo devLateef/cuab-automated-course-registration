@@ -97,14 +97,7 @@ const addCourse = asyncHandler(async (req, res) => {
   // const sqlQuery = 'INSERT INTO registrations SET ?';
 
   try {
-    // if (!Array.isArray(courseAdded)) {
-    //   courseAdded = [];
-    // }
 
-    // // Add data to the array
-    // courseAdded.push(data);
-
-    // Store the updated array in the session
     req.session.myData = data;
 
     console.log('Session data:', req.session.myData);
@@ -130,7 +123,7 @@ const saveToDb = asyncHandler(async (req, res) => {
             console.error('Error inserting data:', err);
             // You can handle the error here, but don't throw it.
           } else {
-            console.log('Inserted data:', results);
+            // console.log('Inserted data:', results);
           }
         },
       );
@@ -138,15 +131,6 @@ const saveToDb = asyncHandler(async (req, res) => {
 
     req.session.myData = [];
     res.redirect(`/courseform/${data[0].matricNo}`);
-    // Move the db.end() call outside the loop and after all queries have completed.
-    // Close the database connection once all queries are finished.
-    // db.end((err) => {
-    //   if (err) {
-    //     console.error('Error closing the database connection:', err);
-    //   } else {
-    //     console.log('Database connection closed');
-    //   }
-    // });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -162,7 +146,6 @@ const removeCourse = asyncHandler(async (req, res) => {
       if (err) {
         throw err;
       }
-      console.log(results)
       res.status(200).json(results);
     });
   } catch (err) {
