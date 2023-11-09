@@ -7,142 +7,148 @@
     <link rel="stylesheet" href="/css/courseform.css" />
   </head>
   <body>
-    <div class="container">
-      <div>
-        <header>
-          <div class="logo">
-            <img src="/img/CrescentLogo.jpeg" alt="school-logo" />
-          </div>
-          <div class="cuab">
-            <h2>CRESCENT UNIVERSITY, ABEOKUTA</h2>
-            <p>Citadel of Academic and Moral Excellence</p>
-            <p>KLM 5, AYETORO ROAD, LAFENWA, ABEOKUTA, OGUN STATE.</p>
-            <p>P.M.B 2104, SAPON, ABEOKUTA, OGUN STATE.</p>
-            <p class="add-web-wrapper">
-              <span>E-mail: info@cuab.edu.ng</span>
-              <span>Website: www.cuab.edu.ng</span>
-            </p>
-          </div>
-          <div class="passport">
-            <div class="box"></div>
-          </div>
-        </header>
-        <section class="student-info">
-          <table>
-            <caption style="margin-bottom: 0.5rem">
-              STUDENT INFO
-            </caption>
-            <tr>
-              <th>MATRIC NO:</th>
-              <td><%=data[0].MatriculationNo%></td>
-              <th>FULL NAME:</th>
-              <td>
-                <%=data[0].Surname + ' ' + data[0].Middlename + ' ' +
-                data[0].Firstname%>
-              </td>
-            </tr>
-            <tr>
-              <th>COLLEGE:</th>
-              <td><%=data[0].College%></td>
-              <th>DEPARTMENT:</th>
-              <td><%=data[0].Dept%></td>
-            </tr>
-            <tr>
-              <th>PROGRAMME:</th>
-              <td><%=data[0].Programme%></td>
-              <th>LEVEL:</th>
-              <td><%=data[0].Level%></td>
-            </tr>
-            <tr>
-              <th>SESSION:</th>
-              <td>2023/2024</td>
-              <th>SEMESTER:</th>
-              <td>FIRST</td>
-            </tr>
-          </table>
-        </section>
-        <div class="relative-spacing">
-          <section class="student-course">
+    <%if(data.length === 0){%>
+      <h1>No Courses Registered</h1>
+    <%}else{%>
+      <div class="container">
+        <div>
+          <header>
+            <div class="logo">
+              <img src="/img/CrescentLogo.jpeg" alt="school-logo" />
+            </div>
+            <div class="cuab">
+              <h2>CRESCENT UNIVERSITY, ABEOKUTA</h2>
+              <p>Citadel of Academic and Moral Excellence</p>
+              <p>KLM 5, AYETORO ROAD, LAFENWA, ABEOKUTA, OGUN STATE.</p>
+              <p>P.M.B 2104, SAPON, ABEOKUTA, OGUN STATE.</p>
+              <p class="add-web-wrapper">
+                <span>E-mail: info@cuab.edu.ng</span>
+                <span>Website: www.cuab.edu.ng</span>
+              </p>
+            </div>
+            <div class="passport">
+              <div class="box"></div>
+            </div>
+          </header>
+          <section class="student-info">
             <table>
-              <caption>
-                REGISTERED COURSES
+              <caption style="margin-bottom: 0.5rem">
+                STUDENT INFO
               </caption>
-              <thead>
-                <tr>
-                  <th class="serial-no">S/NO</th>
-                  <th class="course-code">
-                    COURSE <br />
-                    CODE
-                  </th>
-                  <th>COURSE TITLE</th>
-                  <th class="autoo">UNIT</th>
-                  <th class="autoo">STATUS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% if(data.length > 0){%> <% for(let i = 0; i < data.length;
-                i++){%> <% const item = data[i]%>
-                <tr>
-                  <td><%= i + 1%></td>
-                  <td><%= item.CourseCode%></td>
-                  <td><%= item.CourseTitle%></td>
-                  <td><%= item.CourseUnit%></td>
-                  <td><%= item.CourseStatus%></td>
-                </tr>
-                <%}%> <%}%>
-              </tbody>
+              <tr>
+                <th>MATRIC NO:</th>
+                <td><%=data[0].MatriculationNo%></td>
+                <th>FULL NAME:</th>
+                <td>
+                  <%=data[0].Surname + ' ' + data[0].Middlename + ' ' +
+                  data[0].Firstname%>
+                </td>
+              </tr>
+              <tr>
+                <th>COLLEGE:</th>
+                <td><%=data[0].College%></td>
+                <th>DEPARTMENT:</th>
+                <td><%=data[0].Dept%></td>
+              </tr>
+              <tr>
+                <th>PROGRAMME:</th>
+                <td><%=data[0].Programme%></td>
+                <th>LEVEL:</th>
+                <td><%=data[0].Level%></td>
+              </tr>
+              <tr>
+                <th>SESSION:</th>
+                <td>2023/2024</td>
+                <th>SEMESTER:</th>
+                <td>FIRST</td>
+              </tr>
             </table>
-            <% let sum = data.reduce((accumulator, currentValue) => { return accumulator + currentValue.CourseUnit; }, 0); %>
-            <p>Total Number of Unit Registered: <%= sum %></p>
           </section>
-          <section class="authorization">
-            <div class="student-signature">
-              <p class="std-signature-title">
-                Student Signature: ___________________________________
-              </p>
-              <p style="text-align: center; font-size: 12px">
-                FOR OFFICE USE ONLY
-              </p>
-            </div>
-            <div class="flex">
-              <div>
-                <div class="line">___________________________________</div>
-                <span>Level Adviser Authorization</span>
-              </div>
-              <div>
-                <div class="line">___________________________________</div>
-                <span>Department Authorization</span>
-              </div>
-              <div>
-                <div class="line">___________________________________</div>
-                <span>College Authorization</span>
-              </div>
-              <div>
-                <div class="line">___________________________________</div>
-                <span>Admission Office Authorization</span>
-              </div>
-            </div>
-            <div>
-              <table class="custom-table">
+          <div class="relative-spacing">
+            <section class="student-course">
+              <table>
+                <caption>
+                  REGISTERED COURSES
+                </caption>
+                <thead>
+                  <tr>
+                    <th class="serial-no">S/NO</th>
+                    <th class="course-code">
+                      COURSE <br />
+                      CODE
+                    </th>
+                    <th>COURSE TITLE</th>
+                    <th class="autoo">UNIT</th>
+                    <th class="autoo">STATUS</th>
+                  </tr>
+                </thead>
                 <tbody>
+                  <% if(data.length > 0){%> <% for(let i = 0; i < data.length;
+                  i++){%> <% const item = data[i]%>
                   <tr>
-                    <td>Head of Department</td>
+                    <td><%= i + 1%></td>
+                    <td><%= item.CourseCode%></td>
+                    <td><%= item.CourseTitle%></td>
+                    <td><%= item.CourseUnit%></td>
+                    <td><%= item.CourseStatus%></td>
                   </tr>
-                  <tr>
-                    <td>Exams and Records</td>
-                  </tr>
-                  <tr>
-                    <td>College Officer</td>
-                  </tr>
-                  <tr>
-                    <td>Student Copy</td>
-                  </tr>
+                  <%}%> <%}%>
                 </tbody>
               </table>
-            </div>
-          </section>
+              <% let sum = data.reduce((accumulator, currentValue) => { return accumulator + currentValue.CourseUnit; }, 0); %>
+              <p>Total Number of Unit Registered: <%= sum %></p>
+            </section>
+            <section class="authorization">
+              <div class="student-signature">
+                <p class="std-signature-title">
+                  Student Signature: ___________________________________
+                </p>
+                <p style="text-align: center; font-size: 12px">
+                  FOR OFFICE USE ONLY
+                </p>
+              </div>
+              <div class="flex">
+                <div>
+                  <div class="line">___________________________________</div>
+                  <span>Level Adviser Authorization</span>
+                </div>
+                <div>
+                  <div class="line">___________________________________</div>
+                  <span>Department Authorization</span>
+                </div>
+                <div>
+                  <div class="line">___________________________________</div>
+                  <span>College Authorization</span>
+                </div>
+                <div>
+                  <div class="line">___________________________________</div>
+                  <span>Admission Office Authorization</span>
+                </div>
+              </div>
+              <div>
+                <table class="custom-table">
+                  <tbody>
+                    <tr>
+                      <td>Head of Department</td>
+                    </tr>
+                    <tr>
+                      <td>Exams and Records</td>
+                    </tr>
+                    <tr>
+                      <td>College Officer</td>
+                    </tr>
+                    <tr>
+                      <td>Student Copy</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a href="/course-registration">Back to Registration</a>
+              </div>
+            </section>
+          </div>
         </div>
+        
       </div>
-    </div>
+    <%}%>
   </body>
 </html>
