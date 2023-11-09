@@ -197,9 +197,9 @@ document.getElementById('get_courses').addEventListener('click', getCourses);
 
 let regCourses = [];
 async function addAndRemove(e) {
-  // if (localStorage.getItem('registration')) {
-  //   regCourses = JSON.parse(localStorage.getItem('registration'));
-  // }
+  if (localStorage.getItem('registration')) {
+    regCourses = JSON.parse(localStorage.getItem('registration'));
+  }
   let { MatriculationNo, id } = JSON.parse(localStorage.getItem('studentInfo'))[0];
   const courseId = e.target.dataset.cid;
   const courseCode = e.target.dataset.ccode;
@@ -246,7 +246,7 @@ async function addAndRemove(e) {
     
   }
   console.log(regCourses)
-  // localStorage.setItem('registration', JSON.stringify(regCourses));
+  localStorage.setItem('registration', JSON.stringify(regCourses));
 }
 document.querySelectorAll('.add_remove')?.forEach((ele) => {
   ele.addEventListener('click', addAndRemove);
@@ -290,88 +290,88 @@ async function getStudent() {
   //   );
   //   localStorage.setItem('studentInfo', JSON.stringify(data.results[0]));
   // }
-  if (isExist) {
-    localStorage.setItem(
-      'filterParameter',
-      JSON.stringify({
-        dept: data.results[0].Department,
-        level: data.results[0].Level,
-      }),
-    );
-    localStorage.setItem('registration', JSON.stringify(isExist));
-  }
+  // if (isExist) {
+  //   localStorage.setItem(
+  //     'filterParameter',
+  //     JSON.stringify({
+  //       dept: data.results[0].Department,
+  //       level: data.results[0].Level,
+  //     }),
+  //   );
+  //   localStorage.setItem('registration', JSON.stringify(isExist));
+  // }
 }
-async function filter(dept, lvl) {
-  const res = await fetch(`/filter?department=${dept}&level=${lvl}`);
-  const data = await res.json();
-  localStorage.setItem('courseData', JSON.stringify(data));
-  return data;
-}
-async function filterByDeptLevel() {
-  let clientData = JSON.parse(localStorage.getItem('studentInfo'));
-  const data = await filter(clientData.Department, clientData.Level);
+// async function filter(dept, lvl) {
+//   const res = await fetch(`/filter?department=${dept}&level=${lvl}`);
+//   const data = await res.json();
+//   localStorage.setItem('courseData', JSON.stringify(data));
+//   return data;
+// }
+// async function filterByDeptLevel() {
+//   let clientData = JSON.parse(localStorage.getItem('studentInfo'));
+//   const data = await filter(clientData.Department, clientData.Level);
 
-  deptLevel.innerHTML = '';
-  deptLevel.innerHTML += `
-    <section>
-    <div style='display: flex'>
-        <div>
-          <select id='dept'>
-            <option value='Nursing'>Nursing</option>
-            <option value='Accounting'>Accounting</option>
-            <option value='Architecture'>Architecture</option>
-            <option value='Islamic Studies'>Islamic Studies</option>
-            <option value='Law'>Law</option>
-            <option value='Business Administration'>Business Administration</option>
-            <option value='Biochemistry'>Biochemistry</option>
-            <option value='Computer Science'>Computer Science</option>
-            <option value='Mass Communication'>Mass Communication</option>
-            <option value='Economics with Operations Research'>Economics with Operations Research</option>
-            <option value='Microbiology'>Microbiology</option>
-            <option value='Political Science and International Studies'>Political Science and International Studies</option>
-            <option value='Human Anatomy'>Human Anatomy</option>
-            <option value='Physiology'>Physiology</option>
-          </select>
-        </div>
-        <div>
-          <select id='level'>
-            <option value='100L'>100L</option>
-            <option value='200L'>200L</option>
-            <option value='300L'>300L</option>
-            <option value='400L'>400L</option>
-            <option value='500L'>500L</option>
-            <option value='FNG1'>FNG1</option>
-            <option value='FNG2'>FNG2</option>
-            <option value='FNG3'>FNG3</option>
-          </select>
-        </div>
-      </div>
-    <table>
-    <thead>
-      <tr>
-        <th class="serial-no"><div id="check_all"><button class="plus">+</button><button class="minus">-</button></div></th>
-        <th class="matric-no">Course Code</th>
-        <th>Course Title</th>
-        <th>Unit</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="show_data">
+//   deptLevel.innerHTML = '';
+//   deptLevel.innerHTML += `
+//     <section>
+//     <div style='display: flex'>
+//         <div>
+//           <select id='dept'>
+//             <option value='Nursing'>Nursing</option>
+//             <option value='Accounting'>Accounting</option>
+//             <option value='Architecture'>Architecture</option>
+//             <option value='Islamic Studies'>Islamic Studies</option>
+//             <option value='Law'>Law</option>
+//             <option value='Business Administration'>Business Administration</option>
+//             <option value='Biochemistry'>Biochemistry</option>
+//             <option value='Computer Science'>Computer Science</option>
+//             <option value='Mass Communication'>Mass Communication</option>
+//             <option value='Economics with Operations Research'>Economics with Operations Research</option>
+//             <option value='Microbiology'>Microbiology</option>
+//             <option value='Political Science and International Studies'>Political Science and International Studies</option>
+//             <option value='Human Anatomy'>Human Anatomy</option>
+//             <option value='Physiology'>Physiology</option>
+//           </select>
+//         </div>
+//         <div>
+//           <select id='level'>
+//             <option value='100L'>100L</option>
+//             <option value='200L'>200L</option>
+//             <option value='300L'>300L</option>
+//             <option value='400L'>400L</option>
+//             <option value='500L'>500L</option>
+//             <option value='FNG1'>FNG1</option>
+//             <option value='FNG2'>FNG2</option>
+//             <option value='FNG3'>FNG3</option>
+//           </select>
+//         </div>
+//       </div>
+//     <table>
+//     <thead>
+//       <tr>
+//         <th class="serial-no"><div id="check_all"><button class="plus">+</button><button class="minus">-</button></div></th>
+//         <th class="matric-no">Course Code</th>
+//         <th>Course Title</th>
+//         <th>Unit</th>
+//         <th>Status</th>
+//       </tr>
+//     </thead>
+//     <tbody id="show_data">
        
-    </tbody>
-  </table>
-    </section>
-  `;
+//     </tbody>
+//   </table>
+//     </section>
+//   `;
 
-  const tableData = document.getElementById('show_data');
+//   const tableData = document.getElementById('show_data');
 
-  document.querySelector('#dept').value = clientData.Department;
-  document.querySelector('#level').value = clientData.Level;
+//   document.querySelector('#dept').value = clientData.Department;
+//   document.querySelector('#level').value = clientData.Level;
 
-  document.querySelector('#dept')?.addEventListener('change', changed);
-  document.querySelector('#level')?.addEventListener('change', changed);
-  reg({}, data, tableData);
-}
+//   document.querySelector('#dept')?.addEventListener('change', changed);
+//   document.querySelector('#level')?.addEventListener('change', changed);
+//   reg({}, data, tableData);
+// }
 document.querySelector('#dept')?.addEventListener('change', changed);
 document.querySelector('#level')?.addEventListener('change', changed);
 btn.addEventListener('click', getStudent);
@@ -391,5 +391,5 @@ document.getElementById('generate')?.addEventListener('click', () => {
   }else{
     location.href = '/courses/save'
   }
-  
+  localStorage.removeItem('registration')
 })
