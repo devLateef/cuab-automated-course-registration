@@ -52,3 +52,6 @@ button{
 button.danger{
   background-color: #d9534f;
 }
+#generate{
+  margin: 2rem 0;
+}
