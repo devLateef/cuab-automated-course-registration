@@ -2,13 +2,12 @@ const express = require('express');
 const dotenv = require('dotenv');
 const ejs = require('ejs');
 const expressSession = require('express-session');
-const stdRoutes = require('./routes/studentmanagerroute');
-const courseRoutes = require('./routes/coursesmanagerroute');
-const courseRegRoutes = require('./routes/courseregistrationroute');
-const authRoutes = require('./routes/authroute');
-const { notFound, errorHandler } = require('./middlewares/errorHandler');
-const protect = require('./middlewares/jwtAuthMiddleware.js');
-const { redirectIfNotAuthenticated } = require('./middlewares/redirectIfAuthenticated.js');
+const stdRoutes = require('./routes/studentmanagerroute.js');
+const courseRoutes = require('./routes/coursesmanagerroute.js');
+const courseRegRoutes = require('./routes/courseregistrationroute.js');
+const authRoutes = require('./routes/authroute.js');
+const { notFound, errorHandler } = require('./middlewares/errorHandler.js');
+// const protect = require('./middlewares/jwtAuthMiddleware.js');
 
 require('./dbconfig/db.js');
 
@@ -22,9 +21,8 @@ app.use(express.static('public'));
 app.use(
   expressSession({
     secret: 'Coding is simple',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
-    cookie: { secure: true, maxAge: 3600 * 1000 }
   }),
 );
 app.set('view engine', 'ejs');
