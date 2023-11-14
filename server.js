@@ -36,7 +36,7 @@ app.use(errorHandler);
 //Auth
 app.use(authRoutes);
 // app.use(protect);
-app.use(redirectIfNotAuthenticated);
+// app.use(redirectIfNotAuthenticated);
 
 // Student Route
 app.use(stdRoutes);
