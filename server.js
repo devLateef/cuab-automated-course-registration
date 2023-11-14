@@ -7,9 +7,8 @@ const courseRoutes = require('./routes/coursesmanagerroute');
 const courseRegRoutes = require('./routes/courseregistrationroute');
 const authRoutes = require('./routes/authroute');
 const { notFound, errorHandler } = require('./middlewares/errorHandler');
-const {
-  redirectIfNotAuthenticated,
-} = require('./middlewares/redirectIfAuthenticated');
+const protect = require('./middlewares/jwtAuthMiddleware.js');
+const { redirectIfNotAuthenticated } = require('./middlewares/redirectIfAuthenticated.js');
 
 require('./dbconfig/db.js');
 
@@ -19,21 +18,25 @@ const app = express();
 
 const port = process.env.PORT || 80;
 
+app.use(express.static('public'));
 app.use(
   expressSession({
     secret: 'Coding is simple',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
+    cookie: { secure: true, maxAge: 3600 * 1000 }
   }),
 );
-app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(errorHandler);
+// app.use(notFound);
 
 //Auth
 app.use(authRoutes);
-// app.use(redirectIfNotAuthenticated);
+// app.use(protect);
+app.use(redirectIfNotAuthenticated);
 
 // Student Route
 app.use(stdRoutes);

@@ -45,7 +45,7 @@ const getStudentJson = asyncHandler(async (req, res) => {
 });
 const getCourses = asyncHandler(async (req, res) => {
   const { department, level, matricNo } = req.query;
-  const sqlQuery = 'SELECT * FROM courses WHERE level = ? AND Dept = ?';
+  const sqlQuery = 'SELECT * FROM courses WHERE Level = ? AND Dept = ?';
   const sqlQuery2 = 'SELECT * FROM registrations WHERE matricNo = ?';
   try {
     db.query(sqlQuery, [level, department], (err, courseResults) => {
