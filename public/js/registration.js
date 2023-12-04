@@ -32,6 +32,7 @@ async function addAndRemove(e) {
   }
   let { MatriculationNo, id } = JSON.parse(localStorage.getItem('studentInfo'))[0];
   const courseId = e.target.dataset.cid;
+  const registrationId = e.target.dataset.regid;
   const courseCode = e.target.dataset.ccode;
 
   const index = regCourses.findIndex(
@@ -40,7 +41,7 @@ async function addAndRemove(e) {
 
   if (e.target.classList.contains('minus')) {
   
-      const res = await fetch(`/course-registration/${courseId}`, {
+      const res = await fetch(`/course-registration/${registrationId}`, {
         method: 'DELETE',
       });
       regCourses.splice(index, 1);

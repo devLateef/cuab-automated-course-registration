@@ -57,11 +57,18 @@ const getCourses = asyncHandler(async (req, res) => {
           throw err;
         }
         const finalResult = courseResults.map((result) => {
-          const isRegistered = registrationResults.some(
-            (data) => parseFloat(data.courseId) === parseFloat(result.id),
-          );
-          return { ...result, selected: isRegistered };
+          const registrationInfo = registrationResults.find((data) => {
+            return parseFloat(data.courseId) === parseFloat(result.id);
+          });
+        
+          const isRegistered = registrationInfo
+            ? { selected: true, regId: registrationInfo.id }
+            : { selected: false, regId: null };
+        
+          return { ...result, ...isRegistered };
         });
+        
+        console.log(finalResult);
         res.status(200).render('courseregistration', {
           courseData: finalResult,
           studentData: null,
@@ -97,10 +104,7 @@ const addCourse = asyncHandler(async (req, res) => {
   // const sqlQuery = 'INSERT INTO registrations SET ?';
 
   try {
-
     req.session.myData = data;
-
-    console.log('Session data:', req.session.myData);
     res.status(200).end();
   } catch (err) {
     console.error('Database query error:', err);
@@ -112,7 +116,6 @@ const saveToDb = asyncHandler(async (req, res) => {
   const data = req.session.myData;
   const sqlQuery =
     'INSERT INTO registrations (studentId, courseId, matricNo, code) VALUES (?, ?, ?, ?)';
-  console.log(req.session.myData);
   try {
     for (const item of req.session.myData) {
       db.query(
@@ -139,7 +142,7 @@ const saveToDb = asyncHandler(async (req, res) => {
 
 const removeCourse = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const sqlQuery = 'DELETE FROM registrations WHERE courseId = ?';
+  const sqlQuery = 'DELETE FROM registrations WHERE id = ?';
 
   try {
     db.query(sqlQuery, [id], (err, results) => {
@@ -158,14 +161,26 @@ const generateCourseForm = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const sqlQuery =
-    'SELECT * FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
+    'SELECT courses.*, registrations.*, student_data.*, student_data.Level AS stdLevel FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
 
   try {
     db.query(sqlQuery, [id], (err, results) => {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
+      results.sort((a, b) => {
+        const courseCodeA = a.CourseCode.toUpperCase(); // Convert to uppercase for case-insensitive sorting
+        const courseCodeB = b.CourseCode.toUpperCase();
 
+        if (courseCodeA < courseCodeB) {
+          return -1;
+        } else if (courseCodeA > courseCodeB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      console.log(results);
       // Assuming "courseForm" is an EJS template
       res.status(200).render('courseForm', { data: results });
     });

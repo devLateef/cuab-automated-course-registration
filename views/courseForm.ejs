@@ -37,11 +37,11 @@
               </caption>
               <tr>
                 <th>MATRIC NO:</th>
-                <td><%=data[0].MatriculationNo%></td>
+                <td><%=data[0].MatriculationNo.toUpperCase()%></td>
                 <th>FULL NAME:</th>
                 <td>
-                  <%=data[0].Surname + ' ' + data[0].Middlename + ' ' +
-                  data[0].Firstname%>
+                  <%=data[0].Surname + ' ' + data[0].Firstname + ' ' +
+                  data[0].Middlename%>
                 </td>
               </tr>
               <tr>
@@ -54,7 +54,7 @@
                 <th>PROGRAMME:</th>
                 <td><%=data[0].Programme%></td>
                 <th>LEVEL:</th>
-                <td><%=data[0].Level%></td>
+                <td><%=data[0].stdLevel%></td>
               </tr>
               <tr>
                 <th>SESSION:</th>

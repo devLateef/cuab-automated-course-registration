@@ -141,6 +141,7 @@
                             class="plus <%= courseData[i].selected ? 'hide' : '' %>"
                             data-ccode="<%= courseData[i].CourseCode %>"
                             data-cid="<%= courseData[i].id %>"
+                            data-regid="<%= courseData[i].regId %>"
                           >
                             +
                           </button>
@@ -149,6 +150,7 @@
                             class="minus danger <%= courseData[i].selected ? '' : 'hide' %>"
                             data-ccode="<%= courseData[i].CourseCode %>"
                             data-cid="<%= courseData[i].id %>"
+                            data-regid="<%= courseData[i].regId %>"
                           >
                             -
                           </button>
