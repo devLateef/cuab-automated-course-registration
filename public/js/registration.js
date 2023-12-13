@@ -5,7 +5,6 @@ let deptLevel = document.getElementById('dept_lvl');
 let courseList = document.getElementById('course_list');
 let studentInfo;
 
-
 async function changed() {
   let dept = document.getElementById('dept');
   let lvl = document.getElementById('level');

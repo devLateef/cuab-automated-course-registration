@@ -162,7 +162,6 @@ const generateCourseForm = asyncHandler(async (req, res) => {
 
   const sqlQuery =
     'SELECT courses.*, registrations.*, student_data.*, student_data.Level AS stdLevel FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
-
   try {
     db.query(sqlQuery, [id], (err, results) => {
       if (err) {
