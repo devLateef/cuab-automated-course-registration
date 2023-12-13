@@ -27,18 +27,6 @@ img {
 .body-heading p {
   font-size: small;
 }
-/* .table-1,
-.table-2 {
-  text-align: left;
-} */
-/* table{
-    width: 100%;
-    font-size: small;
-}
-table, th, td{
-    border: 2px solid black;
-    border-collapse: collapse;
-} */
 h5 {
   text-align: center;
   font-size: small;
@@ -138,4 +126,23 @@ i {
   justify-content: center;
   border-radius: 10px;
   background-color: #54f7bb;
+}
+
+.add-new{
+  margin: 2rem 0 0 3rem;
+}
+
+.add-new button{
+  padding: 0.6rem;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 900;
+  margin-right: 1rem;
+  background-color: #094074 ;
+}
+button.upload-many{
+  color:#3a3633;
+  background-color: #B9D6F2;
 }
