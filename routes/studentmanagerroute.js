@@ -6,9 +6,6 @@ const {
   getDahsboard,
   logout,
 } = require('../controllers/studentmanager');
-// const {
-//   redirectIfNotAuthenticated,
-// } = require('../middlewares/redirectIfAuthenticated');
 
 // router.get('/student-manager', studentManagerView);
 router.get('/dashboard', getDahsboard);
@@ -17,3 +14,6 @@ router.get('/student-manager/:id', getStudent);
 router.get('/logout', logout);
 
 module.exports = router;
+
+
+

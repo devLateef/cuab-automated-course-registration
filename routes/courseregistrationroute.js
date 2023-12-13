@@ -6,18 +6,20 @@ const {
   generateCourseForm,
   removeCourse,
   addCourse,
+  getStudent,
   getCourseRegView,
-  registeredCourse,
+  getStudentJson,
+  saveToDb
 } = require('../controllers/courseregistration');
-const { getStudent } = require('../controllers/studentmanager');
 
 // The id is refering to the student's matric no
 router.get('/course-registration', getCourseRegView);
-router.get('/filter', getCourses);
+router.get('/course-registration/q', getCourses);
 router.get('/course-registration/:id', getStudent);
+router.get('/course-registrations/:id', getStudentJson);
 router.get('/courseform/:id', generateCourseForm);
-router.get('/registered/:id', registeredCourse);
+router.post('/courses/store', addCourse);
+router.get('/courses/save', saveToDb);
 router.delete('/course-registration/:id', removeCourse);
-router.post('/course-registration', addCourse);
 
 module.exports = router;

@@ -2,14 +2,12 @@ const express = require('express');
 const dotenv = require('dotenv');
 const ejs = require('ejs');
 const expressSession = require('express-session');
-const stdRoutes = require('./routes/studentmanagerroute');
-const courseRoutes = require('./routes/coursesmanagerroute');
-const courseRegRoutes = require('./routes/courseregistrationroute');
-const authRoutes = require('./routes/authroute');
-const { notFound, errorHandler } = require('./middlewares/errorHandler');
-const {
-  redirectIfNotAuthenticated,
-} = require('./middlewares/redirectIfAuthenticated');
+const stdRoutes = require('./routes/studentmanagerroute.js');
+const courseRoutes = require('./routes/coursesmanagerroute.js');
+const courseRegRoutes = require('./routes/courseregistrationroute.js');
+const authRoutes = require('./routes/authroute.js');
+const { notFound, errorHandler } = require('./middlewares/errorHandler.js');
+// const protect = require('./middlewares/jwtAuthMiddleware.js');
 
 require('./dbconfig/db.js');
 
@@ -24,16 +22,19 @@ app.use(
   expressSession({
     secret: 'Coding is simple',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   }),
 );
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(errorHandler);
+// app.use(notFound);
 
 //Auth
 app.use(authRoutes);
-app.use(redirectIfNotAuthenticated);
+// app.use(protect);
+// app.use(redirectIfNotAuthenticated);
 
 // Student Route
 app.use(stdRoutes);

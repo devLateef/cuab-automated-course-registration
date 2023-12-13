@@ -80,8 +80,16 @@ td {
   width: 300px;
   font-size: 12px;
 }
+a{
+  text-align: center;
+  display: block;
+  margin: 2rem 0
+}
 @media print {
   .container > div {
     width: 100%;
+  }
+  a{
+    display: none;
   }
 }
