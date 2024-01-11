@@ -4,6 +4,8 @@ const router = express.Router();
 const {
   getCourses,
   generateCourseForm,
+  getExamPassView,
+  generateExamPass,
   removeCourse,
   addCourse,
   getStudent,
@@ -18,6 +20,8 @@ router.get('/course-registration/q', getCourses);
 router.get('/course-registration/:id', getStudent);
 router.get('/course-registrations/:id', getStudentJson);
 router.get('/courseform/:id', generateCourseForm);
+router.get('/exampass', getExamPassView);
+router.get('/exampass/:id', generateExamPass);
 router.post('/courses/store', addCourse);
 router.get('/courses/save', saveToDb);
 router.delete('/course-registration/:id', removeCourse);
