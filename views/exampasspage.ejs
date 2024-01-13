@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/app.css" />
-    <link rel="stylesheet" href="css/studentmanager.css" />
-    <link rel="stylesheet" href="css/courseregistration.css" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/studentmanager.css" />
+    <link rel="stylesheet" href="/css/courseregistration.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css"
@@ -20,10 +20,10 @@
         <div class="search-bar">
           <h3>Matric No</h3>
           <input type="text" id="search_input" required />
-          <button type="submit">Fetch</button>
+          <button type="submit" id="sub_btn">Fetch</button>
         </div>
         <div id="student_info">
-          <% if (studentData) { %>
+          <% if (studentData && examPass) { %>
           <div>
             <table>
               <caption style="margin-bottom: 0.5rem">
@@ -57,28 +57,31 @@
                 <th>SEMESTER:</th>
                 <td>FIRST</td>
               </tr>
+              
             </table>
             <div>
               <div style="margin: 1rem 0">
                 <div class="print_check">
                   <label for="is_printed">Print Check</label>
                   <input
-                    type="checkbox"
-                    checked="<%= studentData[0].is_printed %>"
-                    name=""
-                    id="is_printed"
-                  />
+                  type="checkbox"
+                  name="is_printed"
+                  id="is_printed"
+                  data-printed_id="<%= examPass[0].id %>"
+                  <% if (examPass[0].isPrinted === '1') { %>checked<% } %>
+                />
+                </div>
+                <div>
+                  <button type="button" id="generate">Generate</button>
                 </div>
               </div>
             </div>
           </div>
-          <% } else { %>
-          <h4>Student Info</h4>
-          <% } %>
+          <% } else { %> <% } %>
         </div>
       </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script src="/js/exampass.js"></script>
   </body>
 </html>
