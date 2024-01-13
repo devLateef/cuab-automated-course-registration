@@ -30,7 +30,7 @@ async function getStudent() {
   }
 }
 
-if (isPrinted !== null) {
+if (isPrinted !== null && !isPrinted.checked) {
   generateExamPassBtn.disabled = true;
   isPrinted.disabled = false;
 }
