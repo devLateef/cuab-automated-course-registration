@@ -6,8 +6,8 @@ const stdRoutes = require('./routes/studentmanagerroute.js');
 const courseRoutes = require('./routes/coursesmanagerroute.js');
 const courseRegRoutes = require('./routes/courseregistrationroute.js');
 const authRoutes = require('./routes/authroute.js');
-const { notFound, errorHandler } = require('./middlewares/errorHandler.js');
-// const protect = require('./middlewares/jwtAuthMiddleware.js');
+const { errorHandler } = require('./middlewares/errorHandler.js');
+
 
 require('./dbconfig/db.js');
 
@@ -29,12 +29,9 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(errorHandler);
-// app.use(notFound);
 
 //Auth
 app.use(authRoutes);
-// app.use(protect);
-// app.use(redirectIfNotAuthenticated);
 
 // Student Route
 app.use(stdRoutes);
