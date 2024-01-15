@@ -34,6 +34,9 @@ p {
 .cuab {
   text-align: center;
 }
+.cuab p{
+  font-weight: 600;
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -64,18 +67,40 @@ td {
 .student-course p {
   margin-left: 10.5rem;
 }
+
+.total-units{
+  font-size: 1.1rem;
+}
 .student-signature {
   margin: 0 auto 2.5rem auto;
   width: 500px;
+}
+.std-signature-title{
+  font-size: 1.1rem;
 }
 .flex {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.flex > div {
+.qr-flex {
+  display: flex;
+  align-items: center;
+}
+.qr-flex > div{
   text-align: center;
   margin-bottom: 3rem;
+  width: 100%;
 }
+.qr-flex .line-1, .qr-flex .line-2{
+  margin-bottom: 4rem
+}
+.qr-flex span{
+  font-size: 1.05rem;
+}
+.flex > div {
+  text-align: center;
+}
+
 .custom-table {
   width: 300px;
   font-size: 12px;

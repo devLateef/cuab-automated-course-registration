@@ -1,5 +1,6 @@
 const db = require('../dbconfig/db');
 const asyncHandler = require('express-async-handler');
+const qrcode = require('qrcode');
 
 const getCourseRegView = asyncHandler(async (req, res) => {
   try {
@@ -175,7 +176,7 @@ const generateCourseForm = asyncHandler(async (req, res) => {
 const getExamPassView = asyncHandler(async (req, res) => {
   try {
     res.render('exampasspage', {
-      studentData: null
+      studentData: null,
     });
   } catch (err) {
     console.error('Error rendering course exam pass view:', err);
@@ -185,9 +186,9 @@ const getExamPassView = asyncHandler(async (req, res) => {
 
 const generateExamPass = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const sqlQuery =
     'SELECT courses.*, registrations.*, student_data.*, student_data.Level AS stdLevel FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
+
   try {
     db.query(sqlQuery, [id], (err, results) => {
       if (err) {
@@ -205,9 +206,32 @@ const generateExamPass = asyncHandler(async (req, res) => {
           return 0;
         }
       });
-
+      const {
+        MatriculationNo,
+        Surname,
+        Firstname,
+        Middlename,
+        Department,
+        College,
+        Programme,
+        stdLevel,
+      } = results[0];
+      const data = [
+        MatriculationNo,
+        Surname,
+        Firstname,
+        Middlename,
+        Department,
+        College,
+        Programme,
+        stdLevel,
+      ];
+ 
+      qrcode.toDataURL(data.toString(), (err, src) => {
+        if (err) throw err;
+        res.status(200).render('exampass', { data: results, qrcode: src });
+      });
       // Assuming "courseForm" is an EJS template
-      res.status(200).render('exampass', { data: results });
     });
   } catch (err) {
     console.error('Database query error:', err);
@@ -217,21 +241,21 @@ const generateExamPass = asyncHandler(async (req, res) => {
 
 const addStudentToDB = asyncHandler(async (req, res, next) => {
   const { matricNo } = req.body;
-  const sqlQuery ='INSERT INTO exampass (matricno, isPrinted) VALUES (?, ?)';
+  const sqlQuery = 'INSERT INTO exampass (matricno, isPrinted) VALUES (?, ?)';
   const sqlQuery2 = `SELECT * FROM exampass WHERE matricno = ?`;
-  
+
   try {
     db.query(sqlQuery2, [matricNo], (err, results) => {
       if (err) {
         throw err;
       }
-      if(!results?.length) {
+      if (!results?.length) {
         db.query(sqlQuery, [matricNo, false], (err, insertRes) => {
-          if(err) throw err
+          if (err) throw err;
           // console.log('Data inserted', insertRes)
-        })
+        });
       }
-      next()
+      next();
     });
   } catch (err) {
     console.error('Database query error:', err);
@@ -249,14 +273,14 @@ const getStudentForPass = asyncHandler(async (req, res) => {
         throw err;
       }
       db.query(sqlQuery2, [id], (err, passResults) => {
-        if(err){
-          throw err
+        if (err) {
+          throw err;
         }
         res.render('exampasspage', {
           studentData: stdResults,
-          examPass: passResults
+          examPass: passResults,
         });
-      })
+      });
     });
   } catch (err) {
     console.error('Database query error:', err);
@@ -264,9 +288,9 @@ const getStudentForPass = asyncHandler(async (req, res) => {
   }
 });
 
-const updateIsPrinted = asyncHandler(async(req, res) => {
-  const { id } = req.params
-  const { isPrinted } = req.body
+const updateIsPrinted = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { isPrinted } = req.body;
 
   const sql = 'UPDATE exampass SET isPrinted = ? WHERE id = ?';
   try {
@@ -280,7 +304,7 @@ const updateIsPrinted = asyncHandler(async(req, res) => {
     console.error('Database query error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-})
+});
 
 module.exports = {
   generateCourseForm,
@@ -295,5 +319,5 @@ module.exports = {
   getStudentJson,
   getStudentForPass,
   addStudentToDB,
-  updateIsPrinted
+  updateIsPrinted,
 };

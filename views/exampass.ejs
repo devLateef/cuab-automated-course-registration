@@ -17,7 +17,7 @@
               <img src="/img/CrescentLogo.jpeg" alt="school-logo" />
             </div>
             <div class="cuab">
-              <h2>CRESCENT UNIVERSITY, ABEOKUTA</h2>
+              <h1 style="letter-spacing: .05rem; font-size: 1.8rem;">CRESCENT UNIVERSITY, ABEOKUTA</h1>
               <p>Citadel of Academic and Moral Excellence</p>
               <p>KLM 5, AYETORO ROAD, LAFENWA, ABEOKUTA, OGUN STATE.</p>
               <p>P.M.B 2104, SAPON, ABEOKUTA, OGUN STATE.</p>
@@ -32,8 +32,9 @@
           </header>
           <section class="student-info">
             <table>
-              <caption style="margin-bottom: 0.5rem">
-                EXAMINATION PASS - UNDERGRADUATE(FULL TIME)
+              <caption  style="margin-bottom: 0.5rem">
+               <span  style="margin-bottom: 0.2rem; font-size: 1.1rem">  EXAMINATION PASS - UNDERGRADUATE(FULL TIME)</span> <br/>
+                <span style="font-size: 0.8rem;">PLEASE DO NOT WRITE ON EITHER SIDE OF THIS FORM</span>
               </caption>
               <tr>
                 <th>MATRIC NO:</th>
@@ -67,8 +68,8 @@
           <div class="relative-spacing">
             <section class="student-course">
               <table>
-                <caption>
-                  REGISTERED COURSES
+                <caption style="margin-bottom: 0.4rem;">
+                  REGISTERED COURSES FOR EXAMINATION
                 </caption>
                 <thead>
                   <tr>
@@ -96,52 +97,45 @@
                 </tbody>
               </table>
               <% let sum = data.reduce((accumulator, currentValue) => { return accumulator + currentValue.CourseUnit; }, 0); %>
-              <p>Total Number of Unit Registered: <%= sum %></p>
+              <p class="total-units">Total Number of Unit Registered: <%= sum %></p>
             </section>
             <section class="authorization">
               <div class="student-signature">
                 <p class="std-signature-title">
                   Student Signature: ___________________________________
                 </p>
-                <p style="text-align: center; font-size: 12px">
+                <p style="text-align: center; font-size: 14px; margin-top: 1rem;">
                   FOR OFFICE USE ONLY
                 </p>
               </div>
-              <div class="flex">
+              <div class="qr-flex">
                 <div>
-                  <div class="line">___________________________________</div>
-                  <span>Level Adviser Authorization</span>
+                  <div class="line-1">
+                    <div>___________________________________</div>
+                    <span>Bursary Authorization</span>
+                  </div>
+                  <div>
+                    <div class="line">___________________________________</div>
+                    <span>College Authorization</span>
+                  </div>
+
+                </div>
+                
+                <div>
+                  <img style="width: 150px;" src=<%=qrcode%> alt="qrcode" >
                 </div>
                 <div>
-                  <div class="line">___________________________________</div>
-                  <span>Department Authorization</span>
-                </div>
-                <div>
-                  <div class="line">___________________________________</div>
-                  <span>College Authorization</span>
-                </div>
-                <div>
-                  <div class="line">___________________________________</div>
-                  <span>Admission Office Authorization</span>
+                  <div class="line-2">
+                    <div>___________________________________</div>
+                    <span>Department Authorization</span>
+                  </div>
+                  <div>
+                    <div class="line">___________________________________</div>
+                    <span>Admission Office Authorization</span>
+                  </div>
                 </div>
               </div>
               <div>
-                <table class="custom-table">
-                  <tbody>
-                    <tr>
-                      <td>Head of Department</td>
-                    </tr>
-                    <tr>
-                      <td>Exams and Records</td>
-                    </tr>
-                    <tr>
-                      <td>College Officer</td>
-                    </tr>
-                    <tr>
-                      <td>Student Copy</td>
-                    </tr>
-                  </tbody>
-                </table>
                 <a href="/exampass">Back to Examination Pass</a>
               </div>
             </section>
