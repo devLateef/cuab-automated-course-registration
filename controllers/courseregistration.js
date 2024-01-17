@@ -145,7 +145,7 @@ const generateCourseForm = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const sqlQuery =
-    'SELECT courses.*, registrations.*, student_data.*, student_data.Level AS stdLevel FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
+    'SELECT courses.*, registrations.*, student_data.*, student_data.Level AS stdLevel FROM student_data JOIN registrations ON student_data.MatriculationNo = registrations.matricNo JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
   try {
     db.query(sqlQuery, [id], (err, results) => {
       if (err) {
@@ -187,7 +187,7 @@ const getExamPassView = asyncHandler(async (req, res) => {
 const generateExamPass = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const sqlQuery =
-    'SELECT courses.*, registrations.*, student_data.*, student_data.Level AS stdLevel FROM student_data INNER JOIN registrations ON student_data.id = registrations.studentId INNER JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
+    'SELECT courses.*, registrations.*, student_data.*, student_data.Level AS stdLevel FROM student_data JOIN registrations ON student_data.MatriculationNo = registrations.matricNo JOIN courses ON registrations.courseId = courses.id WHERE student_data.MatriculationNo = ?';
 
   try {
     db.query(sqlQuery, [id], (err, results) => {
